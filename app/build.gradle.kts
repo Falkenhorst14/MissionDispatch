@@ -36,6 +36,7 @@ android {
 
 dependencies {
 
+    //val fragment_version = "1.6.1"
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -47,4 +48,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    //implementation("android.fragment:fragment:$fragment_version")
 }
