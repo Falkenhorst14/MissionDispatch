@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.missiondispatch.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+public class  HomeFragment extends Fragment {
 
 private FragmentHomeBinding binding;
 
@@ -22,7 +22,7 @@ private FragmentHomeBinding binding;
     binding = FragmentHomeBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
+        final TextView textView = binding.;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
