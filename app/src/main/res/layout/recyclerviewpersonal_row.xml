@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="@+id/linearrvBetreuerUebersicht">
 
             <TextView
-                android:id="@+id/personalName"
+                android:id="@+id/tvpersonalName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/tvfuehrungsausbildung"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/personalName"
+                app:layout_constraintStart_toEndOf="@+id/tvpersonalName"
                 app:layout_constraintEnd_toStartOf="@+id/checkboxEingesetzt"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
@@ -73,12 +73,30 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/betreuerFachbereiche"
+            android:id="@+id/tvausbildungTauchen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:text="Tauchausbildung: Keine \nBootsführer\nStrömungsretter 1"
+            android:text="Tauchausbildung: Keine"
+            android:textAlignment="textStart"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvausbildungBoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Bootsführer"
+            android:textAlignment="textStart"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvausbildungStroemungsrettung"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Strömungsretter 1"
             android:textAlignment="textStart"
             android:textSize="14sp" />
     </LinearLayout>
