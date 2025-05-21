@@ -31,11 +31,11 @@
             app:layout_constraintTop_toTopOf="@+id/linearrvBetreuerUebersicht">
 
             <TextView
-                android:id="@+id/betreuerName"
+                android:id="@+id/personalName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Klaus Müller"
+                android:text="Lars Vegas"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -43,25 +43,42 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/betreuerAuslastung"
+                android:id="@+id/tvfuehrungsausbildung"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/personalName"
+                app:layout_constraintEnd_toStartOf="@+id/checkboxEingesetzt"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ausgelastet"
-                android:textColor="@color/darkRot"
+                android:text="● ●"
+                android:textColor="@color/black"
                 android:textSize="16sp"
+                 />
+
+                <!-- U+25CF ● BLACK CIRCLE-->
+
+
+            <CheckBox android:id="@+id/checkboxEingesetzt"
+                app:layout_constraintEnd_toEndOf="@id/tvfuehrungsausbildung"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="Im Einsatz"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/betreuerFachbereiche"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:text="Social Media Marketing und Content Creation, Markenführung und Corporate Branding, Konsumentenpsychologie und Marktforschung, Digitales Marketing und SEO, Werbestrategien und Medienplanung, Influencer Marketing und Community Building"
+            android:text="Tauchausbildung: Keine \nBootsführer\nStrömungsretter 1"
             android:textAlignment="textStart"
             android:textSize="14sp" />
     </LinearLayout>
