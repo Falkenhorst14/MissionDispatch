@@ -32,6 +32,10 @@ public class PersonalActivity extends AppCompatActivity {
         frameLayout = (FrameLayout) findViewById(R.id.framelayout);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
+                .addToBackStack(null)
+                .commit();
+
         Intent intentPersonalDetail = getIntent();
 
         einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
@@ -40,11 +44,14 @@ public class PersonalActivity extends AppCompatActivity {
         {
             TabLayout.Tab tab = tabLayout.getTabAt(2);
             tab.select();
+            Fragment fragmentSwitch = null;
+            fragmentSwitch = new PersonalDetailFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragmentSwitch)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
-                .addToBackStack(null)
-                .commit();
+
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
