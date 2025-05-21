@@ -7,6 +7,8 @@ public class Einsatzkraft {
     private String nachname;
     private String telefon;
 
+    private boolean imEinsatz;
+
     //Qualifikationen
     private int tauchAusbildung;
     private int bootsAusbildung;
@@ -62,6 +64,10 @@ public class Einsatzkraft {
         return telefon;
     }
 
+    public boolean getImEinsatz() {
+        return imEinsatz;
+    }
+
     public int getTauchAusbildung() {
         return tauchAusbildung;
     }
@@ -70,7 +76,7 @@ public class Einsatzkraft {
         return bootsAusbildung;
     }
 
-    public int getStroemungsretterAusbildung() {
+    public int getStroemungsrettungsAusbildung() {
         return stroemungsretterAusbildung;
     }
 
@@ -112,6 +118,10 @@ public class Einsatzkraft {
         this.telefon = telefon;
     }
 
+    public void setImEinsatz(boolean imEinsatz) {
+        this.imEinsatz = imEinsatz;
+    }
+
     public void setTauchAusbildung(int tauchAusbildung) {
         this.tauchAusbildung = tauchAusbildung;
     }
@@ -120,7 +130,7 @@ public class Einsatzkraft {
         this.bootsAusbildung = bootsAusbildung;
     }
 
-    public void setStroemungsretterAusbildung(int stroemungsretterAusbildung) {
+    public void setStroemungsrettungsAusbildung(int stroemungsretterAusbildung) {
         this.stroemungsretterAusbildung = stroemungsretterAusbildung;
     }
 
