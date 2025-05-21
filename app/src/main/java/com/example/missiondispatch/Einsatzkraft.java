@@ -16,7 +16,7 @@ public class Einsatzkraft {
     private int wrdAusbildung;
     private int sanAusbildung;
     private int funkAusbildung;
-    private int fuehrungsAusbildung;
+    private String fuehrungsAusbildung;
 
     /**********************************************************************************************
      |                                      Konstruktoren                                          |
@@ -29,7 +29,7 @@ public class Einsatzkraft {
 
     public Einsatzkraft(String vorname, String nachname, String telefon, int tauchAusbildung,
                         int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
-                        int sanAusbildung, int funkAusbildung, int fuehrungsAusbildung)
+                        int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
     {
         this.vorname = vorname;
         this.nachname = nachname;
@@ -46,7 +46,7 @@ public class Einsatzkraft {
     //experimental
     public Einsatzkraft(int id, String vorname, String nachname, String telefon, int tauchAusbildung,
                         int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
-                        int sanAusbildung, int funkAusbildung, int fuehrungsAusbildung)
+                        int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
     {
         this.id = id;
         this.vorname = vorname;
@@ -110,7 +110,7 @@ public class Einsatzkraft {
         return funkAusbildung;
     }
 
-    public int getFuehrungsAusbildung() {
+    public String getFuehrungsAusbildung() {
         return fuehrungsAusbildung;
     }
 
@@ -164,7 +164,7 @@ public class Einsatzkraft {
         this.funkAusbildung = funkAusbildung;
     }
 
-    public void setFuehrungsAusbildung(int fuehrungsAusbildung) {
+    public void setFuehrungsAusbildung(String fuehrungsAusbildung) {
         this.fuehrungsAusbildung = fuehrungsAusbildung;
     }
 
