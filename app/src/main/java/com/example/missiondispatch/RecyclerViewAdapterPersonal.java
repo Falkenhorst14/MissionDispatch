@@ -35,11 +35,11 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(ViewHolder holder, int position) {
         String kompletterName = mData.get(position).getVorname() + " " + mData.get(position).getNachname();
         holder.tvName.setText(kompletterName);
-        holder.tvFuehrungsausbildung.setText(mData.get(position).getFuehrungsAusbildung());
+        holder.tvFuehrungsausbildung.setText(String.valueOf(mData.get(position).getFuehrungsAusbildung()));
         holder.checkbxEingesetzt.setChecked(mData.get(position).getImEinsatz());
-        holder.tvAusbildungTauchen.setText(mData.get(position).getTauchausbildungString(mData.get(position).getTauchAusbildung()));
-        holder.tvAusbildungBoot.setText(mData.get(position).getBootsAusbildung());
-        holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsAusbildung());
+        holder.tvAusbildungTauchen.setText(String.valueOf(mData.get(position).getTauchausbildungString(mData.get(position).getTauchAusbildung())));
+        holder.tvAusbildungBoot.setText(String.valueOf(mData.get(position).getBootsAusbildung()));
+        holder.tvAusbildungStroemungsrettung.setText(String.valueOf(mData.get(position).getStroemungsrettungsAusbildung()));
 
     }
 
