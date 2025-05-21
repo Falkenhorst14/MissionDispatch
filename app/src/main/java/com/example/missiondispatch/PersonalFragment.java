@@ -1,19 +1,36 @@
 package com.example.missiondispatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalFragment extends Fragment {
+public class PersonalFragment extends Fragment implements RecyclerViewAdapterPersonal.ItemClickListener {
+
+    RecyclerViewAdapterPersonal adapter;
+    private List<Einsatzkraft> einsatzkraefte;
+    private int einsatzkraftId;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +70,21 @@ public class PersonalFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        einsatzkraefte = new ArrayList<Einsatzkraft>(10);
+        Einsatzkraft einsatzkraft1 = new Einsatzkraft("Thomas", "Meier",
+                "04232 25293", 3, 1, 1,
+                1, 2, 2, 2);
+        Einsatzkraft einsatzkraft2 = new Einsatzkraft("Mirko", "Bachmann",
+                "04232 25293", 2, 2, 0,
+                1, 3, 2, 0);
+        Einsatzkraft einsatzkraft3 = new Einsatzkraft("Jens", "Schulze",
+                "04232 25293", 3, 1, 0,
+                1, 3, 2, 0);
+        Einsatzkraft einsatzkraft4 = new Einsatzkraft("Vanessa", "Schmidt",
+                "04232 25293", 4, 2, 1,
+                2, 3, 1, 1);
+
     }
 
     @Override
@@ -60,5 +92,30 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_personal, container, false);
+
     }
+
+    private void setupRecyclerView(@NonNull View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // Use view.getContext()
+        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte); // Pass data and listener
+        adapter.setClickListener(this); // This line might be redundant if listener is passed in constructor
+        recyclerView.setAdapter(adapter);
+    }
+
+    //TODO OnItemClick um auf die DetailPersonal Seite zu kommen, wenn man auf eine Einsatzkraft klickt.
+    @Override
+    public void onItemClick(View view, int position) {
+
+        if (einsatzkraefte == null || position < 0 || position >= einsatzkraefte.size()) {
+            // Handle invalid position or data not ready
+            return;
+        }
+
+        Einsatzkraft selectedEinsatzkraft = einsatzkraefte.get(position);
+        Intent intent = new Intent(getActivity(), PersonalActivity.class);
+        intent.putExtra("einsatzkraftID", selectedEinsatzkraft.getId());
+        startActivity(intent);
+    }
+
 }
