@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,19 +75,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        einsatzkraefte = new ArrayList<Einsatzkraft>(10);
-        Einsatzkraft einsatzkraft1 = new Einsatzkraft("Thomas", "Meier",
-                "04232 25293", 3, 1, 1,
-                1, 2, 2, 2);
-        Einsatzkraft einsatzkraft2 = new Einsatzkraft("Mirko", "Bachmann",
-                "04232 25293", 2, 2, 0,
-                1, 3, 2, 0);
-        Einsatzkraft einsatzkraft3 = new Einsatzkraft("Jens", "Schulze",
-                "04232 25293", 3, 1, 0,
-                1, 3, 2, 0);
-        Einsatzkraft einsatzkraft4 = new Einsatzkraft("Vanessa", "Schmidt",
-                "04232 25293", 4, 2, 1,
-                2, 3, 1, 1);
+        loadEinsatzkraefteData();
 
     }
 
@@ -95,12 +87,51 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // View created and data should be loaded
+        if (einsatzkraefte != null && !einsatzkraefte.isEmpty()) {
+            setupRecyclerView(view);
+        }
+    }
+
+    private void loadEinsatzkraefteData()
+    {
+        einsatzkraefte = new ArrayList<Einsatzkraft>(10);
+        Einsatzkraft einsatzkraft1 = new Einsatzkraft(0,"Thomas", "Meier",
+                "04232 25293", 3, 1, 1,
+                1, 2, 2, 2);
+        Einsatzkraft einsatzkraft2 = new Einsatzkraft(1, "Mirko", "Bachmann",
+                "04232 25293", 2, 2, 0,
+                1, 3, 2, 0);
+        Einsatzkraft einsatzkraft3 = new Einsatzkraft(2, "Jens", "Schulze",
+                "04232 25293", 3, 1, 0,
+                1, 3, 2, 0);
+        Einsatzkraft einsatzkraft4 = new Einsatzkraft(3, "Vanessa", "Schmidt",
+                "04232 25293", 4, 2, 1,
+                2, 3, 1, 1);
+
+
+        einsatzkraefte.add(einsatzkraft1);
+        einsatzkraefte.add(einsatzkraft2);
+        einsatzkraefte.add(einsatzkraft3);
+        einsatzkraefte.add(einsatzkraft4);
+    }
+
     private void setupRecyclerView(@NonNull View view) {
         RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // Use view.getContext()
         adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte); // Pass data and listener
         adapter.setClickListener(this); // This line might be redundant if listener is passed in constructor
-        recyclerView.setAdapter(adapter);
+        try {
+            recyclerView.setAdapter(adapter);
+        }
+        catch (Exception e)
+        {
+            Log.d("AdapterError", e.getMessage());
+        }
     }
 
     //TODO OnItemClick um auf die DetailPersonal Seite zu kommen, wenn man auf eine Einsatzkraft klickt.
