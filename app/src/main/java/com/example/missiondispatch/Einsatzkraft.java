@@ -43,6 +43,24 @@ public class Einsatzkraft {
         this.fuehrungsAusbildung = fuehrungsAusbildung;
     }
 
+    //experimental
+    public Einsatzkraft(int id, String vorname, String nachname, String telefon, int tauchAusbildung,
+                        int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
+                        int sanAusbildung, int funkAusbildung, int fuehrungsAusbildung)
+    {
+        this.id = id;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.telefon = telefon;
+        this.tauchAusbildung = tauchAusbildung;
+        this.bootsAusbildung = bootsAusbildung;
+        this.stroemungsretterAusbildung = stroemungsretterAusbildung;
+        this.wrdAusbildung = wrdAusbildung;
+        this.sanAusbildung = sanAusbildung;
+        this.funkAusbildung = funkAusbildung;
+        this.fuehrungsAusbildung = fuehrungsAusbildung;
+    }
+
 
     /**********************************************************************************************
      |                                          Getter                                             |
