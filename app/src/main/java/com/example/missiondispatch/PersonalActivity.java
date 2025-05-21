@@ -31,11 +31,10 @@ public class PersonalActivity extends AppCompatActivity {
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        int personalDetailId = -1;
 
         Intent intentPersonalDetail = getIntent();
 
-        einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftId", -1);
+        einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
         Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_LONG).show();
         //TODO --> Hier soll perspektivisch die PersonalDetailActivity geöffnet werden.
 
