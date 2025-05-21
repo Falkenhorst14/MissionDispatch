@@ -36,7 +36,11 @@ public class PersonalActivity extends AppCompatActivity {
 
         einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
         Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_LONG).show();
-        //TODO --> Hier soll perspektivisch die PersonalDetailActivity geöffnet werden.
+        if (einsatzkraftId != -1)
+        {
+            TabLayout.Tab tab = tabLayout.getTabAt(2);
+            tab.select();
+        }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
                 .addToBackStack(null)
