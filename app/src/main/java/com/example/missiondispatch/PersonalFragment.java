@@ -32,7 +32,6 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
     RecyclerViewAdapterPersonal adapter;
     private List<Einsatzkraft> einsatzkraefte;
-    private int einsatzkraftId;
 
 
 
