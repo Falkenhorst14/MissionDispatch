@@ -1,7 +1,9 @@
 package com.example.missiondispatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,8 @@ public class PersonalActivity extends AppCompatActivity {
     FrameLayout frameLayout;
 
     TabLayout tabLayout;
+    private int einsatzkraftId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,13 @@ public class PersonalActivity extends AppCompatActivity {
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        int personalDetailId = -1;
+
+        Intent intentPersonalDetail = getIntent();
+
+        einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftId", -1);
+        Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_LONG).show();
+        //TODO --> Hier soll perspektivisch die PersonalDetailActivity geöffnet werden.
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
                 .addToBackStack(null)
@@ -53,6 +64,7 @@ public class PersonalActivity extends AppCompatActivity {
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
             }
+
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
