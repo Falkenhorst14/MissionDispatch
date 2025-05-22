@@ -129,7 +129,7 @@
                 android:drawableLeft="@drawable/diving_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" Tauchausbildung: Keine"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
             <TextView
                 android:id="@+id/tvausbildungBoot"
                 android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                 android:drawableLeft="@drawable/anchor_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" Bootsführer"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
             <TextView
                 android:id="@+id/tvausbildungStroemungsrettung"
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                 android:drawableLeft="@drawable/flood_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" Strömungsretter 1"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
             <TextView
                 android:id="@+id/tvausbildungWasserrettung"
                 android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                 android:drawableLeft="@drawable/wrd_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" Fachausbildung Wasserrettungsdienst"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
             <TextView
                 android:id="@+id/tvausbildungMedizin"
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                 android:drawableLeft="@drawable/medical_services_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" Sanitäter"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
             <TextView
                 android:id="@+id/tvausbildungFunk"
                 android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                 android:drawableLeft="@drawable/cell_tower_24dp_000000_fill1_wght400_grad0_opsz24"
                 android:text=" BOS-Funker"
                 android:textAlignment="textStart"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
 
         </LinearLayout>
 
