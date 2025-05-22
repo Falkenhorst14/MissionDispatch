@@ -186,6 +186,8 @@ public class Einsatzkraft {
             tauchausbildungString = "Einsatztaucher 2";
         } else if (tauchAusbildung == 4) {
             tauchausbildungString = "Taucheinsatzführer";
+        } else {
+            tauchausbildungString = "Fehler";
         }
 
         return tauchausbildungString;
@@ -204,6 +206,8 @@ public class Einsatzkraft {
             fuehrungsausbildungString = "Zugführer";
         } else if (fuehrungsausbildung == "❚") {
             fuehrungsausbildungString = "Verbandsführer";
+        } else {
+            fuehrungsausbildungString = "Fehler";
         }
 
         return fuehrungsausbildungString;
