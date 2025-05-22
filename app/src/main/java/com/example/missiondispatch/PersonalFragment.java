@@ -75,7 +75,6 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         }
 
         loadEinsatzkraefteData();
-
     }
 
     @Override
