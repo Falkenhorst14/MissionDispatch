@@ -99,19 +99,19 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
     {
         einsatzkraefte = new ArrayList<Einsatzkraft>(10);
         Einsatzkraft einsatzkraft1 = new Einsatzkraft(0,"Thomas", "Meier",
-                "04232 25293", 3, 1, 1,
+                "04232 25293", "01.01.1970", 3, 1, 1,
                 1, 2, 2, "● ●");
         Einsatzkraft einsatzkraft2 = new Einsatzkraft(1, "Mirko", "Bachmann",
-                "04232 25293", 2, 2, 0,
+                "04232 25293", "01.01.1970", 2, 2, 0,
                 1, 3, 2, "");
         Einsatzkraft einsatzkraft3 = new Einsatzkraft(2, "Jens", "Schulze",
-                "04232 25293", 3, 1, 0,
+                "04232 25293", "01.01.1970", 3, 1, 0,
                 1, 3, 2, "●");
         Einsatzkraft einsatzkraft4 = new Einsatzkraft(3, "Vanessa", "Schmidt",
-                "04232 25293", 4, 2, 1,
+                "04232 25293", "01.01.1970", 4, 2, 1,
                 2, 3, 1, "●");
         Einsatzkraft einsatzkraft5 = new Einsatzkraft(4, "Christian", "Anders",
-                "04232 25293", 1, 1, 2,
+                "04232 25293", "01.01.1970", 1, 1, 2,
                 2, 3, 1, "❚");
 
 

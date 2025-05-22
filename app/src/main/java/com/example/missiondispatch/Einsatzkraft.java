@@ -6,6 +6,7 @@ public class Einsatzkraft {
     private String vorname;
     private String nachname;
     private String telefon;
+    private String geburtsdatum;
 
     private boolean imEinsatz;
 
@@ -27,13 +28,14 @@ public class Einsatzkraft {
 
     }
 
-    public Einsatzkraft(String vorname, String nachname, String telefon, int tauchAusbildung,
-                        int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
-                        int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
+    public Einsatzkraft(String vorname, String nachname, String telefon, String geburtsdatum,
+                        int tauchAusbildung, int bootsAusbildung, int stroemungsretterAusbildung,
+                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
     {
         this.vorname = vorname;
         this.nachname = nachname;
         this.telefon = telefon;
+        this.geburtsdatum = geburtsdatum;
         this.tauchAusbildung = tauchAusbildung;
         this.bootsAusbildung = bootsAusbildung;
         this.stroemungsretterAusbildung = stroemungsretterAusbildung;
@@ -44,14 +46,15 @@ public class Einsatzkraft {
     }
 
     //experimental
-    public Einsatzkraft(int id, String vorname, String nachname, String telefon, int tauchAusbildung,
-                        int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
-                        int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
+    public Einsatzkraft(int id, String vorname, String nachname, String telefon, String geburtsdatum,
+                        int tauchAusbildung, int bootsAusbildung, int stroemungsretterAusbildung,
+                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
     {
         this.id = id;
         this.vorname = vorname;
         this.nachname = nachname;
         this.telefon = telefon;
+        this.geburtsdatum = geburtsdatum;
         this.tauchAusbildung = tauchAusbildung;
         this.bootsAusbildung = bootsAusbildung;
         this.stroemungsretterAusbildung = stroemungsretterAusbildung;
@@ -81,6 +84,7 @@ public class Einsatzkraft {
     public String getTelefon() {
         return telefon;
     }
+    public String getGeburtsdatum() { return geburtsdatum;}
 
     public boolean getImEinsatz() {
         return imEinsatz;
@@ -135,6 +139,7 @@ public class Einsatzkraft {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
+    public void setGeburtsdatum(String geburtsdatum) { this.geburtsdatum = geburtsdatum;}
 
     public void setImEinsatz(boolean imEinsatz) {
         this.imEinsatz = imEinsatz;

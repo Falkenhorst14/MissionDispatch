@@ -103,11 +103,12 @@ public class PersonalDetailFragment extends Fragment {
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
 
         einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
-                "04232 25293", 3, 1, 1,
+                "04232 25293", "01.01.1970", 3, 1, 1,
                 1, 2, 2, "❚");
         //●
 
         //Abbilden von DB-Werten als int auf die Qualifikationsnamen
+        //TODO Geburtsdatum abfragen
         tvName.setText(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname());
         tvFuehrungsausbildung.setText(einsatzkraft.getFuehrungsAusbildung().toString());
         tvFuehrungsausbildungSub.setText(einsatzkraft.getFuehrungsausbildungString(einsatzkraft.getFuehrungsAusbildung()));
