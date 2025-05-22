@@ -201,15 +201,15 @@ public class Einsatzkraft {
     public String getFuehrungsausbildungString (String fuehrungsausbildung) {
         String fuehrungsausbildungString = "";
 
-        if (fuehrungsausbildung == "") {
+        if (fuehrungsausbildung.isEmpty()) {
             fuehrungsausbildungString = "Keine";
-        } else if (fuehrungsausbildung == "●") {
+        } else if (fuehrungsausbildung.equals("●")) {
             fuehrungsausbildungString = "Truppführer";
-        } else if (fuehrungsausbildung == "● ●") {
+        } else if (fuehrungsausbildung.equals("● ●")) {
             fuehrungsausbildungString = "Gruppenführer";
-        } else if (fuehrungsausbildung == "● ● ●") {
+        } else if (fuehrungsausbildung.equals("● ● ●")) {
             fuehrungsausbildungString = "Zugführer";
-        } else if (fuehrungsausbildung == "❚") {
+        } else if (fuehrungsausbildung.equals("❚")) {
             fuehrungsausbildungString = "Verbandsführer";
         } else {
             fuehrungsausbildungString = "Fehler";
