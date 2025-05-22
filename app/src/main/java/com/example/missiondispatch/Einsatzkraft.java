@@ -191,4 +191,22 @@ public class Einsatzkraft {
         return tauchausbildungString;
     }
 
+    public String getFuehrungsausbildungString (String fuehrungsausbildung) {
+        String fuehrungsausbildungString = "";
+
+        if (fuehrungsausbildung == "") {
+            fuehrungsausbildung = "Keine";
+        } else if (fuehrungsausbildung == "●") {
+            fuehrungsausbildungString = "Truppführer";
+        } else if (fuehrungsausbildung == "● ●") {
+            fuehrungsausbildungString = "Gruppenführer";
+        } else if (fuehrungsausbildung == "● ● ●") {
+            fuehrungsausbildungString = "Zugführer";
+        } else if (fuehrungsausbildung == "❚") {
+            fuehrungsausbildungString = "Verbandsführer";
+        }
+
+        return fuehrungsausbildungString;
+    }
+
 }
