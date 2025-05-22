@@ -111,12 +111,16 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         Einsatzkraft einsatzkraft4 = new Einsatzkraft(3, "Vanessa", "Schmidt",
                 "04232 25293", 4, 2, 1,
                 2, 3, 1, "●");
+        Einsatzkraft einsatzkraft5 = new Einsatzkraft(4, "Christian", "Anders",
+                "04232 25293", 1, 1, 2,
+                2, 3, 1, "❚");
 
 
         einsatzkraefte.add(einsatzkraft1);
         einsatzkraefte.add(einsatzkraft2);
         einsatzkraefte.add(einsatzkraft3);
         einsatzkraefte.add(einsatzkraft4);
+        einsatzkraefte.add(einsatzkraft5);
     }
 
     private void setupRecyclerView(@NonNull View view) {
