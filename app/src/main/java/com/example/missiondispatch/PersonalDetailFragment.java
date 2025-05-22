@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +32,7 @@ public class PersonalDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    DBHandler dbHandler;
 
     private Einsatzkraft einsatzkraft;
     private TextView tvName;
@@ -43,6 +47,7 @@ public class PersonalDetailFragment extends Fragment {
     private TextView tvWrdausbildung;
     private TextView tvSanausbildung;
     private TextView tvFunkausbildung;
+    private int bundledId;
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -74,6 +79,8 @@ public class PersonalDetailFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        dbHandler = new DBHandler(getActivity().getApplicationContext());
+
     }
 
     @Override
@@ -86,6 +93,11 @@ public class PersonalDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            bundledId = bundle.getInt("einsatzkraftID", -1);
+        }
+        Toast.makeText(getActivity(), "You selected" + bundledId, Toast.LENGTH_SHORT).show();
         setupViewElements(view);
     }
 
@@ -102,9 +114,11 @@ public class PersonalDetailFragment extends Fragment {
         tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
 
-        einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
+        einsatzkraft = dbHandler.getEinsatzkraft(bundledId);
+
+        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
                 "04232 25293", "01.01.1970", 3, 1, 1,
-                1, 2, 2, "❚");
+                1, 2, 2, "❚");*/
         //●
 
         //Abbilden von DB-Werten als int auf die Qualifikationsnamen

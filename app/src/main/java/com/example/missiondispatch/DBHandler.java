@@ -28,7 +28,7 @@ public class DBHandler extends SQLiteOpenHelper
 
     //T
     private static final String DB_Name = "MissionDispatchDB";
-    private static final int DB_Version = 1;
+    private static final int DB_Version = 2;
     private static final String Table_FIRST = "Einsatzkraefte";
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
@@ -74,7 +74,7 @@ public class DBHandler extends SQLiteOpenHelper
                 + col_WRDAUSBILDUNG + " INTEGER,"
                 + col_SANASUBILDUNG + " INTEGER,"
                 + col_FUNKAUSBILDUNG + " INTEGER,"
-                + col_FUEHRUNGSAUSBILDUNG + " INTEGER);";
+                + col_FUEHRUNGSAUSBILDUNG + " TEXT);";
 
         db.execSQL(query);
 
@@ -90,7 +90,7 @@ public class DBHandler extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " == " + id + " LIMIT 1";
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " == " + id+1 + " LIMIT 1";
 
         Cursor cursor = db.rawQuery(query, null);
 

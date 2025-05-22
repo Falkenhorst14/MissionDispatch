@@ -39,13 +39,16 @@ public class PersonalActivity extends AppCompatActivity {
         Intent intentPersonalDetail = getIntent();
 
         einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
-        Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
         if (einsatzkraftId != -1)
         {
+            Bundle bundle = new Bundle();
+            bundle.putInt("einsatzkraftID", einsatzkraftId);
             TabLayout.Tab tab = tabLayout.getTabAt(2);
             tab.select();
             Fragment fragmentSwitch = null;
             fragmentSwitch = new PersonalDetailFragment();
+            fragmentSwitch.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragmentSwitch)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
