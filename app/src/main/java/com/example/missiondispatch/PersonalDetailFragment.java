@@ -107,17 +107,18 @@ public class PersonalDetailFragment extends Fragment {
                 1, 2, 2, "❚");
         //●
 
+        //Abbilden von DB-Werten als int auf die Qualifikationsnamen
         tvName.setText(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname());
         tvFuehrungsausbildung.setText(einsatzkraft.getFuehrungsAusbildung().toString());
         tvFuehrungsausbildungSub.setText(einsatzkraft.getFuehrungsausbildungString(einsatzkraft.getFuehrungsAusbildung()));
         checkbxImEinsatz.setChecked(einsatzkraft.getImEinsatz());
         tvTelefon.setText(einsatzkraft.getTelefon());
         tvTauchausbildung.setText(einsatzkraft.getTauchausbildungString(einsatzkraft.getTauchAusbildung()));
-        tvBootsausbildung.setText(String.valueOf(einsatzkraft.getBootsAusbildung()));
-        tvStroemungsrettungsausbildung.setText(String.valueOf(einsatzkraft.getStroemungsrettungsAusbildung()));
-        tvWrdausbildung.setText(String.valueOf(einsatzkraft.getWrdAusbildung()));
-        tvSanausbildung.setText(String.valueOf(einsatzkraft.getSanAusbildung()));
-        tvFunkausbildung.setText(String.valueOf(einsatzkraft.getFunkAusbildung()));
+        tvBootsausbildung.setText(einsatzkraft.getBootsausbildungString(einsatzkraft.getBootsAusbildung()));
+        tvStroemungsrettungsausbildung.setText(einsatzkraft.getStroemungsrettungsausbildungString(einsatzkraft.getStroemungsrettungsAusbildung()));
+        tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
+        tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
+        tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
     }
 
 }
