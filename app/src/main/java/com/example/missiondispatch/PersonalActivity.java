@@ -29,9 +29,9 @@ public class PersonalActivity extends AppCompatActivity {
     TabLayout tabLayout;
     private int einsatzkraftId;
     DBHandler dbHandler;
-
     private TabLayout.OnTabSelectedListener tabSelectedListener;
     private boolean isProgrammaticallyTabChange = false;
+    private int lastViewedEinsatzkraftId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,8 @@ public class PersonalActivity extends AppCompatActivity {
 
                 Fragment fragment = null;
                 Bundle arguments = null;
+                //Diese flag kontrolliert, ob die Transaction passiert
+                boolean allowFragmentTransaction = true;
 
                 switch (tab.getPosition())
                 {
@@ -64,7 +66,28 @@ public class PersonalActivity extends AppCompatActivity {
                         fragment = new AbschnitteFragment();
                         break;
                     case 2:
-                        fragment = new PersonalDetailFragment();
+                        if (lastViewedEinsatzkraftId != 1) {
+                            fragment = new PersonalDetailFragment();
+                            arguments = new Bundle();
+                            arguments.putInt("einsatzkraftID", lastViewedEinsatzkraftId);
+                        }
+                        else {
+                            allowFragmentTransaction = false;
+                            Fragment currentActiveFragment = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+                            int previousTabPosition = 0; // Default
+                            if (currentActiveFragment instanceof PersonalFragment) {
+                                previousTabPosition = 0;
+                            } else if (currentActiveFragment instanceof AbschnitteFragment) {
+                                previousTabPosition = 1;
+                            }
+
+                            TabLayout.Tab previousTab = tabLayout.getTabAt(previousTabPosition);
+                            if (previousTab != null && previousTabPosition != tab.getPosition()) {
+                                isProgrammaticallyTabChange = true; // loop praevention
+                                previousTab.select();
+                            }
+                            Toast.makeText(PersonalActivity.this, "Bitte zuerst eine Person auswählen.", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
 
@@ -89,6 +112,9 @@ public class PersonalActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+                if (tab.getPosition() == 2 && lastViewedEinsatzkraftId == -1) {
+                    Toast.makeText(PersonalActivity.this, "Bitte zuerst eine Person auswählen.", Toast.LENGTH_SHORT).show();
+                }
             }
         };
         tabLayout.addOnTabSelectedListener(tabSelectedListener);
@@ -104,6 +130,8 @@ public class PersonalActivity extends AppCompatActivity {
             einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
             //Toast.makeText(this, "Es wurde auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
             if (einsatzkraftId != -1) {
+                this.lastViewedEinsatzkraftId = einsatzkraftId;
+
                 Bundle bundle = new Bundle();
                 bundle.putInt("einsatzkraftID", einsatzkraftId);
                 PersonalDetailFragment detailFragment = new PersonalDetailFragment();
@@ -123,12 +151,16 @@ public class PersonalActivity extends AppCompatActivity {
             }
             else {
 
+                if (getSupportFragmentManager().findFragmentById(R.id.framelayout) == null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, new PersonalFragment())
+                            .commit();
+                }
 
                 //tabLayout.addOnTabSelectedListener(tabSelectedListener);
                 /*Fragment fragmentSwitch = null;
                 fragmentSwitch = new PersonalDetailFragment();
                 fragmentSwitch.setArguments(bundle);*/
-
             }
         }
 
