@@ -66,7 +66,7 @@ public class PersonalActivity extends AppCompatActivity {
                         fragment = new AbschnitteFragment();
                         break;
                     case 2:
-                        if (lastViewedEinsatzkraftId != 1) {
+                        if (lastViewedEinsatzkraftId != -1) {
                             fragment = new PersonalDetailFragment();
                             arguments = new Bundle();
                             arguments.putInt("einsatzkraftID", lastViewedEinsatzkraftId);
