@@ -2,6 +2,7 @@ package com.example.missiondispatch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class PersonalActivity extends AppCompatActivity {
     DBHandler dbHandler;
 
     private TabLayout.OnTabSelectedListener tabSelectedListener;
+    private boolean isProgrammaticallyTabChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,15 @@ public class PersonalActivity extends AppCompatActivity {
         tabSelectedListener = new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if(isProgrammaticallyTabChange)
+                {
+                    isProgrammaticallyTabChange = false;
+                    return;
+                }
+
                 Fragment fragment = null;
+                Bundle arguments = null;
+
                 switch (tab.getPosition())
                 {
                     case 0:
@@ -58,9 +68,17 @@ public class PersonalActivity extends AppCompatActivity {
                         break;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                if (fragment != null) {
+                    if (arguments != null) {
+                        fragment.setArguments(arguments);
+                    }
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, fragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            // No addToBackStack here if you want tabs to just replace content
+                            // Or, if you do, ensure your onBackStackChanged listener also uses the flag
+                            .commit();
+                }
             }
 
             @Override
@@ -73,6 +91,8 @@ public class PersonalActivity extends AppCompatActivity {
 
             }
         };
+        tabLayout.addOnTabSelectedListener(tabSelectedListener);
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
                 .addToBackStack(null)
@@ -82,40 +102,62 @@ public class PersonalActivity extends AppCompatActivity {
 
         try {
             einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
-            Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
-            if (einsatzkraftId != -1)
-            {
+            //Toast.makeText(this, "Es wurde auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
+            if (einsatzkraftId != -1) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("einsatzkraftID", einsatzkraftId);
-                TabLayout.Tab tab = tabLayout.getTabAt(2);
-                //tabLayout.removeOnTabSelectedListener(tabSelectedListener);
-                //tab.select();
-                //tabLayout.addOnTabSelectedListener(tabSelectedListener);
-                Fragment fragmentSwitch = null;
-                fragmentSwitch = new PersonalDetailFragment();
-                fragmentSwitch.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragmentSwitch)
+                PersonalDetailFragment detailFragment = new PersonalDetailFragment();
+                detailFragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, detailFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
+
+                TabLayout.Tab tab = tabLayout.getTabAt(2);
+                if (tab != null) {
+                    //flag change before firing the OnTabSelectedListener
+                    isProgrammaticallyTabChange = true;
+                    tab.select();
+                }
+            }
+            else {
+
+
+                //tabLayout.addOnTabSelectedListener(tabSelectedListener);
+                /*Fragment fragmentSwitch = null;
+                fragmentSwitch = new PersonalDetailFragment();
+                fragmentSwitch.setArguments(bundle);*/
+
             }
         }
 
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            Log.e("PersonalActivity", "Error processing intent: " + e.getMessage(), e);
+            // Load a default fragment in case of error
+            if (getSupportFragmentManager().findFragmentById(R.id.framelayout) == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.framelayout, new PersonalFragment())
+                        .commit();
+            }
         }
 
 
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+            TabLayout.Tab tabToSelect = null;
 
             if (currentFragment instanceof PersonalFragment) {
-                tabLayout.getTabAt(0).select();
+                tabToSelect = tabLayout.getTabAt(0);
             } else if (currentFragment instanceof AbschnitteFragment) {
-                tabLayout.getTabAt(1).select();
+                tabToSelect = tabLayout.getTabAt(1);
             } else if (currentFragment instanceof PersonalDetailFragment) {
-                tabLayout.getTabAt(2).select();
+                tabToSelect = tabLayout.getTabAt(2);
+            }
+            if (tabToSelect != null && tabToSelect.getPosition() != tabLayout.getSelectedTabPosition()) {
+                isProgrammaticallyTabChange = true; // flag wird vor Auswahl gesetzt
+                tabToSelect.select();
             }
         });
 
