@@ -79,7 +79,11 @@ public class PersonalDetailFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        dbHandler = new DBHandler(getActivity().getApplicationContext());
+        Bundle bundle = this.getArguments();
+        if ((bundle != null) && (bundle.getInt("einsatzkraftID", -1) != 0)) {
+            bundledId = bundle.getInt("einsatzkraftID", -1);
+        }
+        //Toast.makeText(getActivity(), "You selected" + bundledId, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -93,12 +97,8 @@ public class PersonalDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            bundledId = bundle.getInt("einsatzkraftID", -1);
-        }
-        Toast.makeText(getActivity(), "You selected" + bundledId, Toast.LENGTH_SHORT).show();
         setupViewElements(view);
+
     }
 
     private void setupViewElements(@NonNull View view) {
@@ -114,12 +114,9 @@ public class PersonalDetailFragment extends Fragment {
         tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
 
-        einsatzkraft = dbHandler.getEinsatzkraft(bundledId);
+        dbHandler = new DBHandler(getActivity().getApplicationContext());
 
-        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
-                "04232 25293", "01.01.1970", 3, 1, 1,
-                1, 2, 2, "❚");*/
-        //●
+        einsatzkraft = dbHandler.getEinsatzkraft(bundledId);
 
         //Abbilden von DB-Werten als int auf die Qualifikationsnamen
         //TODO Geburtsdatum abfragen
@@ -134,6 +131,11 @@ public class PersonalDetailFragment extends Fragment {
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
+
+        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
+                "04232 25293", "01.01.1970", 3, 1, 1,
+                1, 2, 2, "❚");*/
+        //●
     }
 
 }

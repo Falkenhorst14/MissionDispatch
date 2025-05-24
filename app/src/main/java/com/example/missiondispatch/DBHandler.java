@@ -90,7 +90,7 @@ public class DBHandler extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " == " + id+1 + " LIMIT 1";
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " == " + id + " LIMIT 1";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -115,7 +115,7 @@ public class DBHandler extends SQLiteOpenHelper
     }
 
 
-    public List<Einsatzkraft> getAllWords()
+    public List<Einsatzkraft> getAllEinsatzkraefte()
     {
         List<Einsatzkraft> einsatzkraefteList = new ArrayList<>();
 

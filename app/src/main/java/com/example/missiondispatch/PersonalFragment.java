@@ -32,6 +32,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
     RecyclerViewAdapterPersonal adapter;
     private List<Einsatzkraft> einsatzkraefte;
+    DBHandler dbHandler;
 
 
 
@@ -74,7 +75,9 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        loadEinsatzkraefteData();
+        dbHandler = new DBHandler(getActivity());
+        einsatzkraefte = dbHandler.getAllEinsatzkraefte();
+        //loadEinsatzkraefteData();
     }
 
     @Override
@@ -122,11 +125,13 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         einsatzkraefte.add(einsatzkraft5);
     }
 
+    //RecyclerView erstellen und fuellen
     private void setupRecyclerView(@NonNull View view) {
+
         RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // Use view.getContext()
-        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte); // Pass data and listener
-        adapter.setClickListener(this); // This line might be redundant if listener is passed in constructor
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // view.getContext() wegen Fragment
+        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte);
+        adapter.setClickListener(this); // evtl. ueberfluessig wenn Listener in Kosntruktor uebergeben
         try {
             recyclerView.setAdapter(adapter);
         }

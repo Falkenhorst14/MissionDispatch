@@ -6,14 +6,20 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity {
 
@@ -21,7 +27,9 @@ public class PersonalActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     private int einsatzkraftId;
+    DBHandler dbHandler;
 
+    private TabLayout.OnTabSelectedListener tabSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,53 +39,9 @@ public class PersonalActivity extends AppCompatActivity {
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        dbHandler = new DBHandler(getApplicationContext());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
-                .addToBackStack(null)
-                .commit();
-
-        Intent intentPersonalDetail = getIntent();
-
-        try {
-            einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
-            Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
-            if (einsatzkraftId != -1)
-            {
-                Bundle bundle = new Bundle();
-                bundle.putInt("einsatzkraftID", einsatzkraftId);
-                TabLayout.Tab tab = tabLayout.getTabAt(2);
-                tab.select();
-                Fragment fragmentSwitch = null;
-                fragmentSwitch = new PersonalDetailFragment();
-                fragmentSwitch.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragmentSwitch)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        }
-
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-
-
-        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.framelayout);
-
-            if (currentFragment instanceof PersonalFragment) {
-                tabLayout.getTabAt(0).select();
-            } else if (currentFragment instanceof AbschnitteFragment) {
-                tabLayout.getTabAt(1).select();
-            } else if (currentFragment instanceof PersonalDetailFragment) {
-                tabLayout.getTabAt(2).select();
-            }
-        });
-
-
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabSelectedListener = new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment = null;
@@ -108,12 +72,61 @@ public class PersonalActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
+        };
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, new PersonalFragment())
+                .addToBackStack(null)
+                .commit();
+
+        Intent intentPersonalDetail = getIntent();
+
+        try {
+            einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
+            Toast.makeText(this, "Sie haben auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
+            if (einsatzkraftId != -1)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt("einsatzkraftID", einsatzkraftId);
+                TabLayout.Tab tab = tabLayout.getTabAt(2);
+                //tabLayout.removeOnTabSelectedListener(tabSelectedListener);
+                //tab.select();
+                //tabLayout.addOnTabSelectedListener(tabSelectedListener);
+                Fragment fragmentSwitch = null;
+                fragmentSwitch = new PersonalDetailFragment();
+                fragmentSwitch.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragmentSwitch)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+
+            if (currentFragment instanceof PersonalFragment) {
+                tabLayout.getTabAt(0).select();
+            } else if (currentFragment instanceof AbschnitteFragment) {
+                tabLayout.getTabAt(1).select();
+            } else if (currentFragment instanceof PersonalDetailFragment) {
+                tabLayout.getTabAt(2).select();
+            }
         });
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
     }
 }
