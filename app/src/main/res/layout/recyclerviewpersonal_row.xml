@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/customborder"
+        android:backgroundTint="@color/reinWeiss"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearrvBetreuerUebersicht"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearrvBetreuerUebersicht">
+
+            <TextView
+                android:id="@+id/tvpersonalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lars Vegas"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvfuehrungsausbildung"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvpersonalName"
+                app:layout_constraintEnd_toStartOf="@+id/checkboxEingesetzt"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="● ●"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                 />
+
+                <!-- U+25CF ● BLACK CIRCLE-->
+
+
+            <CheckBox android:id="@+id/checkboxEingesetzt"
+
+                app:layout_constraintTop_toTopOf="@+id/tvfuehrungsausbildung"
+                app:layout_constraintBottom_toBottomOf="@+id/tvfuehrungsausbildung"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:textSize="24sp"
+                android:text="Im Einsatz"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/tvausbildungTauchen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Tauchausbildung: Keine"
+            android:textAlignment="textStart"
+            android:textSize="24sp" />
+        <TextView
+            android:id="@+id/tvausbildungBoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Bootsführer"
+            android:textAlignment="textStart"
+            android:textSize="24sp" />
+        <TextView
+            android:id="@+id/tvausbildungStroemungsrettung"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Strömungsretter 1"
+            android:textAlignment="textStart"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>
