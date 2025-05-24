@@ -98,8 +98,6 @@ public class PersonalActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.framelayout, fragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            // No addToBackStack here if you want tabs to just replace content
-                            // Or, if you do, ensure your onBackStackChanged listener also uses the flag
                             .commit();
                 }
             }
@@ -156,11 +154,6 @@ public class PersonalActivity extends AppCompatActivity {
                             .replace(R.id.framelayout, new PersonalFragment())
                             .commit();
                 }
-
-                //tabLayout.addOnTabSelectedListener(tabSelectedListener);
-                /*Fragment fragmentSwitch = null;
-                fragmentSwitch = new PersonalDetailFragment();
-                fragmentSwitch.setArguments(bundle);*/
             }
         }
 
@@ -194,13 +187,10 @@ public class PersonalActivity extends AppCompatActivity {
         });
 
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
     }
 }
