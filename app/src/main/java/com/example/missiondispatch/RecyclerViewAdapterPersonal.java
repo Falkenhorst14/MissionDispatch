@@ -38,8 +38,8 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         holder.tvFuehrungsausbildung.setText(mData.get(position).getFuehrungsAusbildung());
         holder.checkbxEingesetzt.setChecked(mData.get(position).getImEinsatz());
         holder.tvAusbildungTauchen.setText(mData.get(position).getTauchausbildungString(mData.get(position).getTauchAusbildung()));
-        holder.tvAusbildungBoot.setText(mData.get(position).getBootsAusbildung());
-        holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsAusbildung());
+        holder.tvAusbildungBoot.setText(mData.get(position).getBootsausbildungString(mData.get(position).getBootsAusbildung()));
+        holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsausbildungString(mData.get(position).getStroemungsrettungsAusbildung()));
 
     }
 

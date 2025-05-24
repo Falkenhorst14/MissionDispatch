@@ -6,6 +6,7 @@ public class Einsatzkraft {
     private String vorname;
     private String nachname;
     private String telefon;
+    private String geburtsdatum;
 
     private boolean imEinsatz;
 
@@ -16,7 +17,7 @@ public class Einsatzkraft {
     private int wrdAusbildung;
     private int sanAusbildung;
     private int funkAusbildung;
-    private int fuehrungsAusbildung;
+    private String fuehrungsAusbildung;
 
     /**********************************************************************************************
      |                                      Konstruktoren                                          |
@@ -27,13 +28,33 @@ public class Einsatzkraft {
 
     }
 
-    public Einsatzkraft(String vorname, String nachname, String telefon, int tauchAusbildung,
-                        int bootsAusbildung, int stroemungsretterAusbildung, int wrdAusbildung,
-                        int sanAusbildung, int funkAusbildung, int fuehrungsAusbildung)
+    public Einsatzkraft(String vorname, String nachname, String telefon, String geburtsdatum,
+                        int tauchAusbildung, int bootsAusbildung, int stroemungsretterAusbildung,
+                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
     {
         this.vorname = vorname;
         this.nachname = nachname;
         this.telefon = telefon;
+        this.geburtsdatum = geburtsdatum;
+        this.tauchAusbildung = tauchAusbildung;
+        this.bootsAusbildung = bootsAusbildung;
+        this.stroemungsretterAusbildung = stroemungsretterAusbildung;
+        this.wrdAusbildung = wrdAusbildung;
+        this.sanAusbildung = sanAusbildung;
+        this.funkAusbildung = funkAusbildung;
+        this.fuehrungsAusbildung = fuehrungsAusbildung;
+    }
+
+    //experimental
+    public Einsatzkraft(int id, String vorname, String nachname, String telefon, String geburtsdatum,
+                        int tauchAusbildung, int bootsAusbildung, int stroemungsretterAusbildung,
+                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
+    {
+        this.id = id;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.telefon = telefon;
+        this.geburtsdatum = geburtsdatum;
         this.tauchAusbildung = tauchAusbildung;
         this.bootsAusbildung = bootsAusbildung;
         this.stroemungsretterAusbildung = stroemungsretterAusbildung;
@@ -63,6 +84,7 @@ public class Einsatzkraft {
     public String getTelefon() {
         return telefon;
     }
+    public String getGeburtsdatum() { return geburtsdatum;}
 
     public boolean getImEinsatz() {
         return imEinsatz;
@@ -92,7 +114,7 @@ public class Einsatzkraft {
         return funkAusbildung;
     }
 
-    public int getFuehrungsAusbildung() {
+    public String getFuehrungsAusbildung() {
         return fuehrungsAusbildung;
     }
 
@@ -117,6 +139,7 @@ public class Einsatzkraft {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
+    public void setGeburtsdatum(String geburtsdatum) { this.geburtsdatum = geburtsdatum;}
 
     public void setImEinsatz(boolean imEinsatz) {
         this.imEinsatz = imEinsatz;
@@ -146,7 +169,7 @@ public class Einsatzkraft {
         this.funkAusbildung = funkAusbildung;
     }
 
-    public void setFuehrungsAusbildung(int fuehrungsAusbildung) {
+    public void setFuehrungsAusbildung(String fuehrungsAusbildung) {
         this.fuehrungsAusbildung = fuehrungsAusbildung;
     }
 
@@ -168,9 +191,122 @@ public class Einsatzkraft {
             tauchausbildungString = "Einsatztaucher 2";
         } else if (tauchAusbildung == 4) {
             tauchausbildungString = "Taucheinsatzführer";
+        } else {
+            tauchausbildungString = "Fehler";
         }
 
         return tauchausbildungString;
+    }
+
+    public String getFuehrungsausbildungString (String fuehrungsausbildung) {
+        String fuehrungsausbildungString = "";
+
+        if (fuehrungsausbildung.isEmpty()) {
+            fuehrungsausbildungString = "Keine";
+        } else if (fuehrungsausbildung.equals("●")) {
+            fuehrungsausbildungString = "Truppführer";
+        } else if (fuehrungsausbildung.equals("● ●")) {
+            fuehrungsausbildungString = "Gruppenführer";
+        } else if (fuehrungsausbildung.equals("● ● ●")) {
+            fuehrungsausbildungString = "Zugführer";
+        } else if (fuehrungsausbildung.equals("❚")) {
+            fuehrungsausbildungString = "Verbandsführer";
+        } else {
+            fuehrungsausbildungString = "Fehler";
+        }
+
+        return fuehrungsausbildungString;
+    }
+
+    public String getBootsausbildungString (int bootsausbildung) {
+        String bootsausbildungString = "";
+
+        if (bootsausbildung == 0) {
+            bootsausbildungString = "Keine";
+        } else if (bootsausbildung == 1) {
+            bootsausbildungString = "Bootsführer A";
+        } else if (bootsausbildung == 2) {
+            bootsausbildungString = "Bootsführer B";
+        } else if (bootsausbildung == 12) {
+            bootsausbildungString = "Bootsführer A/B";
+        } else {
+            bootsausbildungString = "Fehler";
+        }
+
+        return bootsausbildungString;
+    }
+
+    public String getStroemungsrettungsausbildungString (int stroemungsrettungsausbildung) {
+        String stroemungsrettungsausbildungString = "";
+
+        if (stroemungsrettungsausbildung == 0) {
+            stroemungsrettungsausbildungString = "Keine";
+        } else if (stroemungsrettungsausbildung == 1) {
+            stroemungsrettungsausbildungString = "Strömungsretter 1";
+        } else if (stroemungsrettungsausbildung == 2) {
+            stroemungsrettungsausbildungString = "Strömungsretter 2";
+        } else if (stroemungsrettungsausbildung == 3) {
+            stroemungsrettungsausbildungString = "Gruppenführer SR";
+        } else {
+            stroemungsrettungsausbildungString = "Fehler";
+        }
+
+        return stroemungsrettungsausbildungString;
+    }
+
+
+    public String getWrdausbildungString (int wrdausbildung) {
+        String wrdausbildungString = "";
+
+        if (wrdausbildung == 0) {
+            wrdausbildungString = "Keine";
+        } else if (wrdausbildung == 1) {
+            wrdausbildungString = "Basisausbildung";
+        } else if (wrdausbildung == 2) {
+            wrdausbildungString = "Fachausbildung WRD";
+        } else if (wrdausbildung == 3) {
+            wrdausbildungString = "Wachführer";
+        } else {
+            wrdausbildungString = "Fehler";
+        }
+
+        return wrdausbildungString;
+    }
+
+    public String getSanausbildungString (int sanausbildung) {
+        String sanausbildungString = "";
+
+        if (sanausbildung == 0) {
+            sanausbildungString = "Keine";
+        } else if (sanausbildung == 1) {
+            sanausbildungString = "Ersthelfer";
+        } else if (sanausbildung == 2) {
+            sanausbildungString = "Sanitätshelfer";
+        } else if (sanausbildung == 3) {
+            sanausbildungString = "Sanitäter";
+        } else if (sanausbildung == 4 ){
+            sanausbildungString = "RD-Qualifikation";
+        } else {
+            sanausbildungString = "Fehler";
+        }
+        return sanausbildungString;
+    }
+
+    public String getFunkausbildungString (int funkausbildung) {
+        String funkausbildungString = "";
+
+        if (funkausbildung == 0) {
+            funkausbildungString = "Keine";
+        } else if (funkausbildung == 1) {
+            funkausbildungString = "Funkunterweisung";
+        } else if (funkausbildung == 2) {
+            funkausbildungString = "Sprechfunker";
+        } else if (funkausbildung == 3) {
+            funkausbildungString = "BOS-Sprechfunker";
+        } else {
+            funkausbildungString = "Fehler";
+        }
+        return funkausbildungString;
     }
 
 }
