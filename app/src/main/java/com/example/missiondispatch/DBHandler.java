@@ -155,23 +155,17 @@ public class DBHandler extends SQLiteOpenHelper
     /**********************************************************************************************
      |                                   UPDATE Einsatzkraft                                       |
      **********************************************************************************************/
-    /*public void updateUser(User user) {
+    //Setzt den Boolean "imEinsatz". --> Muss im uebergebenen Objekt vorher programmatisch angepasst werden
+    public void updateEinsatzkraftStatus(Einsatzkraft einsatzkraft) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
 
-        data.put("name", user.getName());
-        data.put("erfahrungspunkte", user.getErfahrungspunkte());
-        data.put("aktuellerStreak", user.getAktuellerStreak());
-        data.put("datumLetzteWiederholung", user.getDatumLetzteWiederholung());
-        data.put("hoechsterStreak", user.getHoechsterStreak());
-        data.put("vokabelnWiederholt", user.getVokabelnWiederholt());
-        data.put("id", user.getId());
-        data.put("letzteStreakAnpassung", user.getDatumLetzteStreakanpassung());
+        data.put("imEinsatz", einsatzkraft.getImEinsatz());
 
-        db.update(Table_SECOND, data, "ID=" + user.getId(), null);
+        db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
         db.close();
-    }*/
+    }
 
     /*//Spaeterer Uebergabe-Param wird String today sein (herausgenommen)
     public Word getNext()
