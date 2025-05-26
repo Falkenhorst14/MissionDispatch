@@ -28,7 +28,7 @@ import java.util.List;
  * Use the {@link PersonalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalFragment extends Fragment implements RecyclerViewAdapterPersonal.ItemClickListener {
+public class PersonalFragment extends Fragment implements RecyclerViewAdapterPersonal.ItemClickListener, RecyclerViewAdapterPersonal.OnItemCheckedChangeListener {
 
     RecyclerViewAdapterPersonal adapter;
     private List<Einsatzkraft> einsatzkraefte;
@@ -130,7 +130,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
         RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // view.getContext() wegen Fragment
-        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte);
+        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte, this);
         adapter.setClickListener(this); // evtl. ueberfluessig wenn Listener in Kosntruktor uebergeben
         try {
             recyclerView.setAdapter(adapter);
@@ -141,7 +141,6 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         }
     }
 
-    //TODO OnItemClick um auf die DetailPersonal Seite zu kommen, wenn man auf eine Einsatzkraft klickt.
     @Override
     public void onItemClick(View view, int position) {
 
@@ -154,6 +153,17 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         Intent intent = new Intent(getActivity(), PersonalActivity.class);
         intent.putExtra("einsatzkraftID", selectedEinsatzkraft.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemCheckedChanged(int position, boolean isChecked) {
+        Einsatzkraft einsatzkraft = einsatzkraefte.get(position);
+        einsatzkraft.setImEinsatz(isChecked);
+
+        // Hier Datenbank aktualisieren
+        new Thread(() -> {
+            dbHandler.updateEinsatzkraftStatus(einsatzkraft);
+        }).start();
     }
 
 }
