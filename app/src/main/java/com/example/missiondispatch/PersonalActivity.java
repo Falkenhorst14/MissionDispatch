@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -192,5 +193,48 @@ public class PersonalActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.framelayout); // Replace with your container ID
+
+        if (currentFragment instanceof PersonalFragment)
+        {
+            //System.exit(0);
+            finishAffinity();
+            /*if (isTaskRoot()) {
+                //moveTaskToBack(true);
+                //finishAffinity();
+                System.exit(0);
+            } else {
+                finish();
+            }*/
+
+        } else if (currentFragment instanceof AbschnitteFragment || currentFragment instanceof PersonalDetailFragment) {
+            openPersonalFragment();
+        } else if (fm.getBackStackEntryCount() > 0) {
+            // If there are fragments in the back stack, pop the stack
+            fm.popBackStack();
+        } else {
+            // Otherwise, default behavior (usually finishes the activity if no fragment back stack)
+            finishAffinity();
+        }
+    }
+
+
+    private void openPersonalFragment() {
+        Fragment fragment = new PersonalFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayout, fragment);
+        //Optional line:
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
+
     }
 }
