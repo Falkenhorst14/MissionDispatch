@@ -245,7 +245,7 @@ public class DBHandler extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_FIRST;
+        String query = "SELECT * FROM " + Table_SECOND;
 
         Cursor cursor = db.rawQuery(query, null);
 
