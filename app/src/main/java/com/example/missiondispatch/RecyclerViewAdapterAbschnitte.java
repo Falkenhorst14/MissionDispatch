@@ -79,4 +79,12 @@ public class RecyclerViewAdapterAbschnitte extends RecyclerView.Adapter<Recycler
         void onItemClick(View view, int position);
     }
 
+    public void updateData(List<Abschnitt> newData) {
+        this.mData.clear();
+        if (newData != null) {
+            this.mData.addAll(newData);
+        }
+        notifyDataSetChanged();
+    }
+
 }

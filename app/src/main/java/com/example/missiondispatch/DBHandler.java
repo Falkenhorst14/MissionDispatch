@@ -277,6 +277,17 @@ public class DBHandler extends SQLiteOpenHelper
         db.close();
     }
 
+    public boolean deleteAbschnitt(int ID)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        //veraltet
+        /*sqLiteDatabase.delete(Table_SECOND, "ID=" + Integer.toString(ID),null);
+        sqLiteDatabase.close();*/
+        String query = "DELETE FROM " + Table_SECOND + " WHERE " + col_ID_AS + " = " + ID;
+        sqLiteDatabase.execSQL(query);
+        return true;
+    }
+
 
 
     //Funktion, die jedes Wort zu dem angegebenen Lernstatus anzeigt, was ein Datum enthält.
