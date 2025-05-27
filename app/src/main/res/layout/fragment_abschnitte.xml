@@ -11,14 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAbschnittUebersicht"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutAbschnitte"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
         <RelativeLayout
+            android:id="@+id/relativeLayoutAbschnitte"
             android:layout_width="match_parent"
             android:layout_height="75sp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/reinGrau"
             >
 
+            <EditText
+                android:id="@+id/edtAbschnittName"
+                android:layout_width="550dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="100dp"
+                android:backgroundTint="@color/DLRG_Rot"
+                android:hint="Namen eingeben">
+
+            </EditText>
+
+
             <Button
+                android:id="@+id/btnErstellenAbschnitt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
