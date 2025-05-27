@@ -3,6 +3,7 @@ package com.example.missiondispatch;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,7 +29,7 @@ import java.util.List;
  * Use the {@link PersonalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalFragment extends Fragment implements RecyclerViewAdapterPersonal.ItemClickListener {
+public class PersonalFragment extends Fragment implements RecyclerViewAdapterPersonal.ItemClickListener, RecyclerViewAdapterPersonal.OnItemCheckedChangeListener {
 
     RecyclerViewAdapterPersonal adapter;
     private List<Einsatzkraft> einsatzkraefte;
@@ -96,6 +97,16 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         if (einsatzkraefte != null && !einsatzkraefte.isEmpty()) {
             setupRecyclerView(view);
         }
+
+        //beendet die App, wenn im (anwendungslogischen) Start-Fragment zurueck geclickt wird
+        getActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        getActivity().finish();
+                    }
+                }
+        );
     }
 
     private void loadEinsatzkraefteData()
@@ -130,7 +141,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
         RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // view.getContext() wegen Fragment
-        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte);
+        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte, this);
         adapter.setClickListener(this); // evtl. ueberfluessig wenn Listener in Kosntruktor uebergeben
         try {
             recyclerView.setAdapter(adapter);
@@ -141,7 +152,6 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         }
     }
 
-    //TODO OnItemClick um auf die DetailPersonal Seite zu kommen, wenn man auf eine Einsatzkraft klickt.
     @Override
     public void onItemClick(View view, int position) {
 
@@ -156,4 +166,26 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         startActivity(intent);
     }
 
+    @Override
+    public void onItemCheckedChanged(int position, boolean isChecked) {
+        Einsatzkraft einsatzkraft = einsatzkraefte.get(position);
+        einsatzkraft.setImEinsatz(isChecked);
+
+        // Hier Datenbank aktualisieren
+        new Thread(() -> {
+            dbHandler.updateEinsatzkraftStatus(einsatzkraft);
+        }).start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getView() != null)
+        {
+            setupRecyclerView(getView());
+        }
+        else { Log.d("ViewError", "Fehler beim getten der View."); }
+
+    }
 }

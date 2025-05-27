@@ -1,19 +1,40 @@
 package com.example.missiondispatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AbschnitteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AbschnitteFragment extends Fragment {
+public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterAbschnitte.ItemClickListener {
+
+    RecyclerViewAdapterAbschnitte adapter;
+    private RecyclerView recyclerView;
+    private List<Abschnitt> abschnitte;
+    DBHandler dbHandler;
+    private Button btnerstellen;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +74,9 @@ public class AbschnitteFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        dbHandler = new DBHandler(getActivity());
+        abschnitte = dbHandler.getAllAbschnitte();
     }
 
     @Override
@@ -61,4 +85,81 @@ public class AbschnitteFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_abschnitte, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // View created and data should be loaded
+        if (abschnitte != null && !abschnitte.isEmpty()) {
+            setupRecyclerView(view);
+        }
+        else {
+            Toast.makeText(getActivity(),"Keine Abschnitte vorhanden, erstelle den ersten!", Toast.LENGTH_SHORT).show();
+        }
+        btnerstellen = getActivity().findViewById(R.id.btnErstellenAbschnitt);
+
+        btnerstellen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText edtAbschnittName = getActivity().findViewById(R.id.edtAbschnittName);
+                String name = edtAbschnittName.getText().toString();
+                dbHandler.addNewAbschnitt(name);
+                loadAllAbschnitte();
+            }
+        });
+    }
+
+    //Erstellt RecyclerView und befuellt
+    private void setupRecyclerView(@NonNull View view) {
+
+        recyclerView = view.findViewById(R.id.rvAbschnittUebersicht);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // view.getContext() wegen Fragments
+        adapter = new RecyclerViewAdapterAbschnitte(getActivity(), abschnitte);
+        adapter.setClickListener(this); // evtl. ueberfluessig wenn Listener in Kosntruktor uebergeben
+        try {
+            recyclerView.setAdapter(adapter);
+        }
+        catch (Exception e)
+        {
+            Log.d("AdapterError", e.getMessage());
+        }
+    }
+
+
+    //Innerer Teil vorerst ueberfluessig ohne Einstellungen TODO: Spaeter evtl. als Loeschen verwenden
+    @Override
+    public void onItemClick(View view, int position) {
+
+        Toast.makeText(getActivity(), "Du hast an Position " + position + " geklickt.", Toast.LENGTH_SHORT).show();
+        /*if (abschnitte == null || position < 0 || position >= abschnitte.size()) {
+            // Handle invalid position or data not ready
+            return;
+        }
+
+        Abschnitt selectedAbschnitt = abschnitte.get(position);
+        Intent intent = new Intent(getActivity(), PersonalActivity.class);
+        intent.putExtra("abschnittID", selectedAbschnitt.getId());
+        startActivity(intent);*/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getView() != null)
+        {
+            setupRecyclerView(getView());
+        }
+        else { Log.d("ViewError", "Fehler beim getten der View."); }
+
+    }
+
+    private void loadAllAbschnitte()
+    {
+        List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
+        adapter = new RecyclerViewAdapterAbschnitte(getActivity(), abschnitte);
+        recyclerView.setAdapter(adapter);
+    }
+
 }
