@@ -158,6 +158,7 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
     private void loadAllAbschnitte()
     {
         List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
+        adapter = new RecyclerViewAdapterAbschnitte(getActivity(), abschnitte);
         recyclerView.setAdapter(adapter);
     }
 
