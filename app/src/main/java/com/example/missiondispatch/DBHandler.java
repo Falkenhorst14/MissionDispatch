@@ -264,6 +264,19 @@ public class DBHandler extends SQLiteOpenHelper
         return abschnitteList;
     }
 
+    public void addNewAbschnitt(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(col_NAME_AS, name);
+
+        db.insert(Table_SECOND, null, values);
+
+        db.close();
+    }
+
 
 
     //Funktion, die jedes Wort zu dem angegebenen Lernstatus anzeigt, was ein Datum enthält.
