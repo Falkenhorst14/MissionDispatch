@@ -99,6 +99,14 @@ public class PersonalDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupViewElements(view);
 
+        checkbxImEinsatz.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            einsatzkraft.setImEinsatz(isChecked);
+            new Thread(() -> {
+                dbHandler.updateEinsatzkraftStatus(einsatzkraft);
+                einsatzkraft = dbHandler.getEinsatzkraft(einsatzkraft.getId());
+                checkbxImEinsatz.setChecked(einsatzkraft.getImEinsatz());
+            }).start();
+        });
     }
 
     private void setupViewElements(@NonNull View view) {
