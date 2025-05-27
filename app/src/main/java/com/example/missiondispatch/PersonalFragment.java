@@ -3,6 +3,7 @@ package com.example.missiondispatch;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -96,6 +97,16 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         if (einsatzkraefte != null && !einsatzkraefte.isEmpty()) {
             setupRecyclerView(view);
         }
+
+        //beendet die App, wenn im (anwendungslogischen) Start-Fragment zurueck geclickt wird
+        getActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        getActivity().finish();
+                    }
+                }
+        );
     }
 
     private void loadEinsatzkraefteData()
@@ -166,4 +177,15 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         }).start();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getView() != null)
+        {
+            setupRecyclerView(getView());
+        }
+        else { Log.d("ViewError", "Fehler beim getten der View."); }
+
+    }
 }
