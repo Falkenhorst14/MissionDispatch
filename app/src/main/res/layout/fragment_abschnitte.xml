@@ -3,12 +3,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AbschnitteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAbschnittUebersicht"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="38dp"
+            android:paddingBottom="38dp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutAbschnitte"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutAbschnitte"
+            android:layout_width="match_parent"
+            android:layout_height="75sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/customborder"
+            >
+
+            <EditText
+                android:id="@+id/edtAbschnittName"
+                android:layout_width="550dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="100dp"
+                android:backgroundTint="@color/DLRG_Rot"
+                android:hint="Namen eingeben">
+
+            </EditText>
+
+
+            <Button
+                android:id="@+id/btnErstellenAbschnitt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/roundedbutton"
+                android:textColor="@color/DLRG_Gelb"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:text="Abschnitt erstellen"
+                >
+
+            </Button>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </FrameLayout>

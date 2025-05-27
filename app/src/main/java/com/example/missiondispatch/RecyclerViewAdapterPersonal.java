@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,11 +17,13 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
     private List<Einsatzkraft> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private OnItemCheckedChangeListener listener;
 
     // data is passed into the constructor
-    RecyclerViewAdapterPersonal(Context context, List<Einsatzkraft> data) {
+    RecyclerViewAdapterPersonal(Context context, List<Einsatzkraft> data, OnItemCheckedChangeListener listener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.listener = listener;
     }
 
     // inflates the row layout from xml when needed
@@ -40,6 +43,7 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         holder.tvAusbildungTauchen.setText(mData.get(position).getTauchausbildungString(mData.get(position).getTauchAusbildung()));
         holder.tvAusbildungBoot.setText(mData.get(position).getBootsausbildungString(mData.get(position).getBootsAusbildung()));
         holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsausbildungString(mData.get(position).getStroemungsrettungsAusbildung()));
+        holder.bind(mData.get(position));
 
     }
 
@@ -79,7 +83,23 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
+
+        public void bind(Einsatzkraft einsatzkraft)
+        {
+            checkbxEingesetzt.setOnCheckedChangeListener(null);
+            checkbxEingesetzt.setChecked(einsatzkraft.getImEinsatz());
+
+            checkbxEingesetzt.setOnCheckedChangeListener((buttonView, isChecked) ->
+            {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemCheckedChanged(position, isChecked);
+                }
+            });
+        }
+
     }
+
 
     // convenience method for getting data at click position
     String getItem(int id) {
@@ -95,5 +115,10 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
+
+    public interface OnItemCheckedChangeListener {
+        void onItemCheckedChanged(int position, boolean isChecked);
+    }
+
 
 }

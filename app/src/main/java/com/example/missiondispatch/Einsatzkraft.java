@@ -19,6 +19,9 @@ public class Einsatzkraft {
     private int funkAusbildung;
     private String fuehrungsAusbildung;
 
+    //Zuordnungen
+    private int abschnittId;
+
     /**********************************************************************************************
      |                                      Konstruktoren                                          |
      **********************************************************************************************/
@@ -30,7 +33,7 @@ public class Einsatzkraft {
 
     public Einsatzkraft(String vorname, String nachname, String telefon, String geburtsdatum,
                         int tauchAusbildung, int bootsAusbildung, int stroemungsretterAusbildung,
-                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung)
+                        int wrdAusbildung, int sanAusbildung, int funkAusbildung, String fuehrungsAusbildung, int abschnittId)
     {
         this.vorname = vorname;
         this.nachname = nachname;
@@ -43,6 +46,7 @@ public class Einsatzkraft {
         this.sanAusbildung = sanAusbildung;
         this.funkAusbildung = funkAusbildung;
         this.fuehrungsAusbildung = fuehrungsAusbildung;
+        this.abschnittId = abschnittId;
     }
 
     //experimental
@@ -117,6 +121,7 @@ public class Einsatzkraft {
     public String getFuehrungsAusbildung() {
         return fuehrungsAusbildung;
     }
+    public int getAbschnittId() { return abschnittId; }
 
 
     /**********************************************************************************************
@@ -172,6 +177,7 @@ public class Einsatzkraft {
     public void setFuehrungsAusbildung(String fuehrungsAusbildung) {
         this.fuehrungsAusbildung = fuehrungsAusbildung;
     }
+    public void setAbschnittId(int abschnittId) { this.abschnittId = abschnittId; }
 
 
     /**********************************************************************************************
