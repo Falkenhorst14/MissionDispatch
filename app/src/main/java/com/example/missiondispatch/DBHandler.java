@@ -28,7 +28,7 @@ public class DBHandler extends SQLiteOpenHelper
 
     //T
     private static final String DB_Name = "MissionDispatchDB";
-    private static final int DB_Version = 2;
+    private static final int DB_Version = 3;
     private static final String Table_FIRST = "Einsatzkraefte";
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
@@ -46,7 +46,9 @@ public class DBHandler extends SQLiteOpenHelper
     private static final String col_FUEHRUNGSAUSBILDUNG = "fuehrungsausbildung";
 
 
-    //Tabelle 2 ist hier anzulegen
+    private static final String Table_SECOND = "Abschnitte";
+    private static final String col_ID_AS = "id_abschnitte";
+    private static final String col_NAME_AS = "name_abschnitte";
 
 
     public DBHandler (Context context)
@@ -77,6 +79,12 @@ public class DBHandler extends SQLiteOpenHelper
                 + col_FUEHRUNGSAUSBILDUNG + " TEXT);";
 
         db.execSQL(query);
+
+        String query2 = "CREATE TABLE IF NOT EXISTS " + Table_SECOND + " ("
+                + col_ID_AS + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + col_NAME_AS + " TEXT);";
+
+        db.execSQL(query2);
 
     }
 
@@ -209,6 +217,52 @@ public class DBHandler extends SQLiteOpenHelper
         cursor.close();
         return naechstesWort;
     }*/
+
+
+    public Abschnitt getAbschnitt(int id)
+    {
+        Abschnitt abschnitt = new Abschnitt();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND + " WHERE " + col_ID_AS + " == " + id + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            abschnitt.setId(cursor.getInt(0));
+            abschnitt.setName(cursor.getString(1));
+
+            cursor.close();
+        }
+        return abschnitt;
+    }
+
+
+    public List<Abschnitt> getAllAbschnitte()
+    {
+        List<Abschnitt> abschnitteList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        //Schleife iteriert durch alle Zeilen, waehrend die Daten in List geladen werden
+        if(cursor.moveToFirst())
+        {
+            do {
+                Abschnitt abschnitt = new Abschnitt();
+                abschnitt.setId(cursor.getInt(0));
+                abschnitt.setName(cursor.getString(1));
+                abschnitteList.add(abschnitt);
+            }
+            while(cursor.moveToNext());
+        }
+        cursor.close();
+        return abschnitteList;
+    }
 
 
 
