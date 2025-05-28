@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/customborder"
@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="15dp"
@@ -88,12 +88,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvtelefon"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -103,97 +103,121 @@
                 android:textAlignment="textStart"
                 android:textSize="24sp" />
 
-
-
         </LinearLayout>
-
-
-
-
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="25dp"
-            android:orientation="vertical"
-            android:background="@drawable/customborder"
-            android:layout_gravity="left"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvausbildungTauchen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/diving_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" Tauchausbildung: Keine"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
-            <TextView
-                android:id="@+id/tvausbildungBoot"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/anchor_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" Bootsführer"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
-            <TextView
-                android:id="@+id/tvausbildungStroemungsrettung"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/flood_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" Strömungsretter 1"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
-            <TextView
-                android:id="@+id/tvausbildungWasserrettung"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/wrd_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" Fachausbildung Wasserrettungsdienst"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
-            <TextView
-                android:id="@+id/tvausbildungMedizin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/medical_services_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" Sanitäter"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
-            <TextView
-                android:id="@+id/tvausbildungFunk"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:drawableLeft="@drawable/cell_tower_24dp_000000_fill1_wght400_grad0_opsz24"
-                android:drawablePadding="5dp"
-                android:text=" BOS-Funker"
-                android:textAlignment="textStart"
-                android:textSize="32sp" />
+                android:layout_marginStart="25dp"
+                android:orientation="vertical"
+                android:background="@drawable/customborder"
+                android:layout_gravity="left"
+                >
+
+                <TextView
+                    android:id="@+id/tvausbildungTauchen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/diving_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" Tauchausbildung: Keine"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+                <TextView
+                    android:id="@+id/tvausbildungBoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/anchor_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" Bootsführer"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+                <TextView
+                    android:id="@+id/tvausbildungStroemungsrettung"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/flood_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" Strömungsretter 1"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+                <TextView
+                    android:id="@+id/tvausbildungWasserrettung"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/wrd_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" Fachausbildung Wasserrettungsdienst"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+                <TextView
+                    android:id="@+id/tvausbildungMedizin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/medical_services_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" Sanitäter"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+                <TextView
+                    android:id="@+id/tvausbildungFunk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@drawable/cell_tower_24dp_000000_fill1_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text=" BOS-Funker"
+                    android:textAlignment="textStart"
+                    android:textSize="32sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <Spinner
+                    android:id="@+id/spnAbschnitt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="60dp"
+                    android:spinnerMode="dropdown"
+                    >
+
+                </Spinner>
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
+
+
 
     </LinearLayout>
 
