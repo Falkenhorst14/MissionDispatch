@@ -207,6 +207,7 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="60dp"
                     android:spinnerMode="dropdown"
+                    app:layout_constraintHorizontal_bias="0.000"
                     >
 
                 </Spinner>

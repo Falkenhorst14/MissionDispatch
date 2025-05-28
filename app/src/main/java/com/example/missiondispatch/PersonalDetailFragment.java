@@ -9,20 +9,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListResourceBundle;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonalDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PersonalDetailFragment extends Fragment {
+public class PersonalDetailFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +53,7 @@ public class PersonalDetailFragment extends Fragment {
     private TextView tvSanausbildung;
     private TextView tvFunkausbildung;
     private int bundledId;
+    private Spinner spnAbschnitt;
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -85,6 +91,7 @@ public class PersonalDetailFragment extends Fragment {
         }
         //Toast.makeText(getActivity(), "You selected" + bundledId, Toast.LENGTH_SHORT).show();
 
+
     }
 
     @Override
@@ -97,7 +104,29 @@ public class PersonalDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        spnAbschnitt = view.findViewById(R.id.spnAbschnitt);
         setupViewElements(view);
+
+
+
+        //Es muss im Folgenden ein String-Array befüllt werden mit allen Abschnitten
+
+        List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
+        List<String> abschnittNamen = new ArrayList<>();
+
+        for (Abschnitt a : abschnitte )
+        {
+            abschnittNamen.add(a.getName());
+        }
+        String[] items = new String[abschnittNamen.size()];
+        for (int i = 0; i < abschnittNamen.size(); i++)
+        {
+            items[i] = abschnittNamen.get(i);
+        }
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, items);
+        spnAbschnitt.setAdapter(spinnerAdapter);
+        spnAbschnitt.setOnItemSelectedListener(this);
 
         checkbxImEinsatz.setOnCheckedChangeListener((buttonView, isChecked) -> {
             einsatzkraft.setImEinsatz(isChecked);
@@ -144,6 +173,17 @@ public class PersonalDetailFragment extends Fragment {
                 "04232 25293", "01.01.1970", 3, 1, 1,
                 1, 2, 2, "❚");*/
         //●
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 }
