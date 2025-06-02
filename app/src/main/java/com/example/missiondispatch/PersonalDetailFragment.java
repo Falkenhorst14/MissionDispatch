@@ -149,25 +149,13 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
             public void onClick(View v) {
                 einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
                 dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                setupViewElements();
             }
         });
     }
 
     private void setupViewElements(@NonNull View view) {
-        tvName = view.findViewById(R.id.tvpersonalName);
-        tvFuehrungsausbildung = view.findViewById(R.id.tvfuehrungsausbildung);
-        tvFuehrungsausbildungSub = view.findViewById(R.id.tvfuehrungSub);
-        checkbxImEinsatz = view.findViewById(R.id.checkboxEingesetzt);
-        tvTelefon = view.findViewById(R.id.tvtelefon);
-        tvTauchausbildung = view.findViewById(R.id.tvausbildungTauchen);
-        tvBootsausbildung = view.findViewById(R.id.tvausbildungBoot);
-        tvStroemungsrettungsausbildung = view.findViewById(R.id.tvausbildungStroemungsrettung);
-        tvWrdausbildung = view.findViewById(R.id.tvausbildungWasserrettung);
-        tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
-        tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
-        tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
-
-        dbHandler = new DBHandler(getActivity().getApplicationContext());
+        findViewElements(view);
 
         einsatzkraft = dbHandler.getEinsatzkraft(bundledId);
 
@@ -191,6 +179,51 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                 "04232 25293", "01.01.1970", 3, 1, 1,
                 1, 2, 2, "❚");*/
         //●
+    }
+
+    //Ueberladen zur Aktualisierung
+    private void setupViewElements() {
+
+        einsatzkraft = dbHandler.getEinsatzkraft(bundledId);
+
+        //Abbilden von DB-Werten als int auf die Qualifikationsnamen
+        //TODO Geburtsdatum abfragen
+        tvName.setText(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname());
+        tvFuehrungsausbildung.setText(einsatzkraft.getFuehrungsAusbildung().toString());
+        tvFuehrungsausbildungSub.setText(einsatzkraft.getFuehrungsausbildungString(einsatzkraft.getFuehrungsAusbildung()));
+        checkbxImEinsatz.setChecked(einsatzkraft.getImEinsatz());
+        tvTelefon.setText(einsatzkraft.getTelefon());
+        tvTauchausbildung.setText(einsatzkraft.getTauchausbildungString(einsatzkraft.getTauchAusbildung()));
+        tvBootsausbildung.setText(einsatzkraft.getBootsausbildungString(einsatzkraft.getBootsAusbildung()));
+        tvStroemungsrettungsausbildung.setText(einsatzkraft.getStroemungsrettungsausbildungString(einsatzkraft.getStroemungsrettungsAusbildung()));
+        tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
+        tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
+        tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
+        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+
+
+        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
+                "04232 25293", "01.01.1970", 3, 1, 1,
+                1, 2, 2, "❚");*/
+        //●
+    }
+
+    private void findViewElements(@NonNull View view)
+    {
+        tvName = view.findViewById(R.id.tvpersonalName);
+        tvFuehrungsausbildung = view.findViewById(R.id.tvfuehrungsausbildung);
+        tvFuehrungsausbildungSub = view.findViewById(R.id.tvfuehrungSub);
+        checkbxImEinsatz = view.findViewById(R.id.checkboxEingesetzt);
+        tvTelefon = view.findViewById(R.id.tvtelefon);
+        tvTauchausbildung = view.findViewById(R.id.tvausbildungTauchen);
+        tvBootsausbildung = view.findViewById(R.id.tvausbildungBoot);
+        tvStroemungsrettungsausbildung = view.findViewById(R.id.tvausbildungStroemungsrettung);
+        tvWrdausbildung = view.findViewById(R.id.tvausbildungWasserrettung);
+        tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
+        tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
+        tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
+
+        dbHandler = new DBHandler(getActivity().getApplicationContext());
     }
 
     @Override
