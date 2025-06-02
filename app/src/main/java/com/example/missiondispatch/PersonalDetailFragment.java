@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +57,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private int bundledId;
     private Spinner spnAbschnitt;
     private TextView tvAbschnitt;
+    private Button btnAbschnittzuweisen;
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -106,6 +109,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         spnAbschnitt = view.findViewById(R.id.spnAbschnitt);
+        btnAbschnittzuweisen = view.findViewById(R.id.btnAbschnittZuweisen);
         setupViewElements(view);
 
 
@@ -136,6 +140,15 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                 einsatzkraft = dbHandler.getEinsatzkraft(einsatzkraft.getId());
                 checkbxImEinsatz.setChecked(einsatzkraft.getImEinsatz());
             }).start();
+        });
+
+
+        btnAbschnittzuweisen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                einsatzkraft.setAbschnittId(spnAbschnitt.getId());
+                dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+            }
         });
     }
 
