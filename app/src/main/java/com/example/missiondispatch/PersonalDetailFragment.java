@@ -54,6 +54,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private TextView tvFunkausbildung;
     private int bundledId;
     private Spinner spnAbschnitt;
+    private TextView tvAbschnitt;
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -150,6 +151,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung = view.findViewById(R.id.tvausbildungWasserrettung);
         tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
+        tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
 
         dbHandler = new DBHandler(getActivity().getApplicationContext());
 
@@ -168,6 +170,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
+        spnAbschnitt.setPrompt("Neuen Abschnitt auswählen");
+        tvAbschnitt.setText(dbHandler.getAbschnitt(einsatzkraft.getAbschnittId()).getName());
+
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
                 "04232 25293", "01.01.1970", 3, 1, 1,

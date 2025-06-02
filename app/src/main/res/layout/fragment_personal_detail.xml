@@ -201,6 +201,28 @@
                 android:orientation="vertical"
                 >
 
+                <TextView
+                    android:id="@+id/tvAktuellerAbschnittLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:text="Aktueller Abschnitt:"
+                    android:textSize="28sp"
+                    >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvAktuellerAbschnitt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:text="Turm 9 3/4"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    >
+                </TextView>
+
+
                 <Spinner
                     android:id="@+id/spnAbschnitt"
                     android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
+    // binds the data to the (e.g.) TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String kompletterName = mData.get(position).getVorname() + " " + mData.get(position).getNachname();
@@ -44,6 +45,7 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         holder.tvAusbildungBoot.setText(mData.get(position).getBootsausbildungString(mData.get(position).getBootsAusbildung()));
         holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsausbildungString(mData.get(position).getStroemungsrettungsAusbildung()));
         holder.bind(mData.get(position));
+        holder.tvAbschnitt.setText(String.valueOf(mData.get(position).getAbschnittId()));
 
     }
 
@@ -62,6 +64,7 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         TextView tvAusbildungTauchen;
         TextView tvAusbildungBoot;
         TextView tvAusbildungStroemungsrettung;
+        TextView tvAbschnitt;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -76,6 +79,8 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
             tvAusbildungBoot = itemView.findViewById(R.id.tvausbildungBoot);
             itemView.setOnClickListener(this);
             tvAusbildungStroemungsrettung = itemView.findViewById(R.id.tvausbildungStroemungsrettung);
+            itemView.setOnClickListener(this);
+            tvAbschnitt = itemView.findViewById(R.id.tvAbschnittAuswahl);
             itemView.setOnClickListener(this);
         }
 

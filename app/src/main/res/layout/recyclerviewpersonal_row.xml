@@ -73,34 +73,64 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
 
-        <TextView
-            android:id="@+id/tvausbildungTauchen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="Tauchausbildung: Keine"
-            android:textAlignment="textStart"
-            android:textSize="24sp" />
-        <TextView
-            android:id="@+id/tvausbildungBoot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="Bootsführer"
-            android:textAlignment="textStart"
-            android:textSize="24sp" />
-        <TextView
-            android:id="@+id/tvausbildungStroemungsrettung"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="Strömungsretter 1"
-            android:textAlignment="textStart"
-            android:textSize="24sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tvausbildungTauchen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="Tauchausbildung: Keine"
+                    android:textAlignment="textStart"
+                    android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/tvausbildungBoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="Bootsführer"
+                    android:textAlignment="textStart"
+                    android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/tvausbildungStroemungsrettung"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="Strömungsretter 1"
+                    android:textAlignment="textStart"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAbschnittAuswahl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Abschnitt Auswahl"
+                android:textSize="24sp"
+                android:gravity="right"
+                android:layout_marginRight="15dp"
+                >
+
+
+            </TextView>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>
