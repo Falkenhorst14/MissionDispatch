@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/customborder"
         android:backgroundTint="@color/reinGrau"
         android:gravity="center"
