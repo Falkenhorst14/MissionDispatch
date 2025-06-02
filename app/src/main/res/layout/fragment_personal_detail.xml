@@ -206,6 +206,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60dp"
+                    android:drawableLeft="@drawable/apartment_24dp_000000_fill0_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
                     android:text="Aktueller Abschnitt:"
                     android:textSize="28sp"
                     >
@@ -215,13 +217,26 @@
                     android:id="@+id/tvAktuellerAbschnitt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
+                    android:layout_marginStart="65dp"
                     android:text="Turm 9 3/4"
                     android:textSize="28sp"
                     android:textStyle="bold"
                     >
                 </TextView>
 
+
+                <TextView
+                    android:id="@+id/tvNeuerAbschnittLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="60dp"
+                    android:drawableLeft="@drawable/add_location_24dp_000000_fill0_wght400_grad0_opsz24"
+                    android:drawablePadding="5dp"
+                    android:text="Neuer Abschnitt:"
+                    android:textSize="28sp"
+                    >
+                </TextView>
 
                 <Spinner
                     android:id="@+id/spnAbschnitt"
