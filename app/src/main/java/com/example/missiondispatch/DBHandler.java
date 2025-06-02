@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class DBHandler extends SQLiteOpenHelper
 
     //T
     private static final String DB_Name = "MissionDispatchDB";
-    private static final int DB_Version = 3;
+    private static final int DB_Version = 5;
     private static final String Table_FIRST = "Einsatzkraefte";
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
@@ -44,6 +45,7 @@ public class DBHandler extends SQLiteOpenHelper
     private static final String col_SANASUBILDUNG = "sanausbildung";
     private static final String col_FUNKAUSBILDUNG = "funkausbildung";
     private static final String col_FUEHRUNGSAUSBILDUNG = "fuehrungsausbildung";
+    private static final String col_EINSATZKRAFT_ABSCHNITT = "einsatzkraft_abschnitt";
 
 
     private static final String Table_SECOND = "Abschnitte";
@@ -56,10 +58,6 @@ public class DBHandler extends SQLiteOpenHelper
         super(context, DB_Name, null, DB_Version);
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -76,7 +74,8 @@ public class DBHandler extends SQLiteOpenHelper
                 + col_WRDAUSBILDUNG + " INTEGER,"
                 + col_SANASUBILDUNG + " INTEGER,"
                 + col_FUNKAUSBILDUNG + " INTEGER,"
-                + col_FUEHRUNGSAUSBILDUNG + " TEXT);";
+                + col_FUEHRUNGSAUSBILDUNG + " TEXT,"
+                + col_EINSATZKRAFT_ABSCHNITT + " INTEGER);";
 
         db.execSQL(query);
 
@@ -86,6 +85,22 @@ public class DBHandler extends SQLiteOpenHelper
 
         db.execSQL(query2);
 
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.w("DBHandler", "onUpgrade called. Upgrading database from version " + oldVersion + " to " + newVersion);
+
+        // Auf Versionsnummer achten
+        if (oldVersion < 2 && newVersion >= 2) {
+            try {
+                Log.i("DBHandler", "Upgrading schema: Adding column " + col_EINSATZKRAFT_ABSCHNITT + " to " + Table_FIRST);
+                db.execSQL("ALTER TABLE " + Table_FIRST + " ADD COLUMN " + col_EINSATZKRAFT_ABSCHNITT + " INTEGER;");
+                Log.i("DBHandler", "Column " + col_EINSATZKRAFT_ABSCHNITT + " added successfully.");
+            } catch (Exception e) {
+                Log.e("DBHandler", "Error adding column " + col_EINSATZKRAFT_ABSCHNITT + " to " + Table_FIRST, e);
+            }
+        }
     }
 
     /**********************************************************************************************
@@ -116,6 +131,7 @@ public class DBHandler extends SQLiteOpenHelper
             einsatzkraft.setSanAusbildung(cursor.getInt(10));
             einsatzkraft.setFunkAusbildung(cursor.getInt(11));
             einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+            einsatzkraft.setAbschnittId(13);
 
             cursor.close();
         }
@@ -151,6 +167,15 @@ public class DBHandler extends SQLiteOpenHelper
                 einsatzkraft.setSanAusbildung(cursor.getInt(10));
                 einsatzkraft.setFunkAusbildung(cursor.getInt(11));
                 einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+                try
+                {
+                    einsatzkraft.setAbschnittId(cursor.getInt(13));
+                }
+                catch (Exception e)
+                {
+                    Log.d("LoadEinsatzkraft", e.getMessage());
+                    einsatzkraft.setAbschnittId(-1);
+                }
                 einsatzkraefteList.add(einsatzkraft);
             }
             while(cursor.moveToNext());
@@ -288,6 +313,18 @@ public class DBHandler extends SQLiteOpenHelper
         return true;
     }
 
+
+    //Ändert den Abschnitt, dem eine Einsatzkraft zugewiesen ist
+    public void updateEinsatzkraftAbschnitt(Einsatzkraft einsatzkraft) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues data = new ContentValues();
+
+        data.put("einsatzkraft_abschnitt", einsatzkraft.getAbschnittId());
+
+        db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
+        db.close();
+    }
 
 
     //Funktion, die jedes Wort zu dem angegebenen Lernstatus anzeigt, was ein Datum enthält.
