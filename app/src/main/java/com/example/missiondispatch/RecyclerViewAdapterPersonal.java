@@ -45,7 +45,7 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         holder.tvAusbildungBoot.setText(mData.get(position).getBootsausbildungString(mData.get(position).getBootsAusbildung()));
         holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsausbildungString(mData.get(position).getStroemungsrettungsAusbildung()));
         holder.bind(mData.get(position));
-        holder.tvAbschnitt.setText(String.valueOf(mData.get(position).getAbschnittId()));
+        //holder.tvAbschnitt.setText(String.valueOf(mData.get(position).getAbschnittId()));
 
     }
 
