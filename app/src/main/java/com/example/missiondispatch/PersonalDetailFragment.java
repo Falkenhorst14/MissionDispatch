@@ -58,6 +58,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private Spinner spnAbschnitt;
     private TextView tvAbschnitt;
     private Button btnAbschnittzuweisen;
+    private int selectedAbschnittForZuweisung;
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -146,7 +147,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnAbschnittzuweisen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                einsatzkraft.setAbschnittId(spnAbschnitt.getId());
+                einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
                 dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
             }
         });
@@ -195,8 +196,10 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
+        //wenn der gewaehlte Text gebraucht wird
+        //String choice = parent.getItemAtPosition(position).toString();
+        int selectedPosition = parent.getSelectedItemPosition();
+        selectedAbschnittForZuweisung = dbHandler.getAbschnittByPosition(selectedPosition).getId();
     }
 
     @Override
