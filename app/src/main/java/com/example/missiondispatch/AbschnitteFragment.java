@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -131,7 +132,6 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
     @Override
     public void onItemClick(View view, int position) {
 
-        Toast.makeText(getActivity(), "Du hast an Position " + position + " geklickt.", Toast.LENGTH_SHORT).show();
         /*if (abschnitte == null || position < 0 || position >= abschnitte.size()) {
             // Handle invalid position or data not ready
             return;
@@ -141,12 +141,39 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
         Intent intent = new Intent(getActivity(), PersonalActivity.class);
         intent.putExtra("abschnittID", selectedAbschnitt.getId());
         startActivity(intent);*/
+
+        // Basic validation
+        if (adapter == null || this.abschnitte == null || position < 0 || position >= this.abschnitte.size()) {
+            Log.e("AbschnitteFragment", "onItemClick: Invalid state or position. Position: " + position);
+            return;
+        }
+
+        Abschnitt zuLoeschenderAbschnitt = this.abschnitte.get(position); // Get from fragment's list
+
+        // 1. Delete from DB
+        boolean deletedFromDB = dbHandler.deleteAbschnitt(zuLoeschenderAbschnitt.getId());
+
+        if (deletedFromDB) {
+            this.abschnitte.remove(position);
+            adapter.notifyItemRemoved(position);
+            adapter.notifyItemRangeChanged(position, this.abschnitte.size() - position);
+
+            Toast.makeText(getActivity(), "Abschnitt '" + zuLoeschenderAbschnitt.getName() + "' gelöscht.", Toast.LENGTH_SHORT).show();
+
+            if (this.abschnitte.isEmpty()) {
+                Toast.makeText(getActivity(), "Keine Abschnitte mehr vorhanden.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Fehler beim Löschen von '" + zuLoeschenderAbschnitt.getName() + "'.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
+        //TODO ueberpruefen
         if (getView() != null)
         {
             setupRecyclerView(getView());
@@ -157,6 +184,23 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
 
     private void loadAllAbschnitte()
     {
+        List<Abschnitt> updatedAbschnitte = dbHandler.getAllAbschnitte();
+        if (this.abschnitte == null) { // Ensure the fragment's list is initialized
+            this.abschnitte = new ArrayList<>();
+        }
+        this.abschnitte.clear();
+        if (updatedAbschnitte != null) {
+            this.abschnitte.addAll(updatedAbschnitte);
+        }
+
+        if (adapter != null) {
+            adapter.updateData(this.abschnitte); // Call the new method
+        } else {
+            Log.e("AbschnitteFragment", "loadAllAbschnitte: Adapter is null, cannot update.");
+            // setupRecyclerView(getView()); // getView() kann null sein
+        }
+
+        //veraltet:
         List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
         adapter = new RecyclerViewAdapterAbschnitte(getActivity(), abschnitte);
         recyclerView.setAdapter(adapter);
