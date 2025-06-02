@@ -263,6 +263,25 @@ public class DBHandler extends SQLiteOpenHelper
         return abschnitt;
     }
 
+    public Abschnitt getAbschnittByPosition(int position)
+    {
+        Abschnitt abschnitt = new Abschnitt();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND + " LIMIT 1 OFFSET " + position;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            abschnitt.setId(cursor.getInt(0));
+            abschnitt.setName(cursor.getString(1));
+
+            cursor.close();
+        }
+        return abschnitt;
+    }
+
 
     public List<Abschnitt> getAllAbschnitte()
     {
