@@ -131,7 +131,7 @@ public class DBHandler extends SQLiteOpenHelper
             einsatzkraft.setSanAusbildung(cursor.getInt(10));
             einsatzkraft.setFunkAusbildung(cursor.getInt(11));
             einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
-            einsatzkraft.setAbschnittId(13);
+            einsatzkraft.setAbschnittId(cursor.getInt(13));
 
             cursor.close();
         }

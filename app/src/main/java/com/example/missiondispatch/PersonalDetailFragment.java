@@ -114,7 +114,6 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         setupViewElements(view);
 
 
-
         //Es muss im Folgenden ein String-Array befüllt werden mit allen Abschnitten
 
         List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
@@ -133,6 +132,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item, items);
         spnAbschnitt.setAdapter(spinnerAdapter);
         spnAbschnitt.setOnItemSelectedListener(this);
+        spnAbschnitt.setPrompt("Neuen Abschnitt auswählen");
 
         checkbxImEinsatz.setOnCheckedChangeListener((buttonView, isChecked) -> {
             einsatzkraft.setImEinsatz(isChecked);
@@ -184,8 +184,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
-        spnAbschnitt.setPrompt("Neuen Abschnitt auswählen");
-        tvAbschnitt.setText(dbHandler.getAbschnitt(einsatzkraft.getAbschnittId()).getName());
+        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
 
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
