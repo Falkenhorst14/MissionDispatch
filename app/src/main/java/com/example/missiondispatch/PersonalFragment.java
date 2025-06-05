@@ -98,7 +98,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
             setupRecyclerView(view);
         }
 
-        //beendet die App, wenn im (anwendungslogischen) Start-Fragment zurueck geclickt wird
+        //beendet die App, wenn im (anwendungslogischen) Start-Fragment zurueck geklickt wird
         getActivity().getOnBackPressedDispatcher().addCallback(
                 getViewLifecycleOwner(), new OnBackPressedCallback(true) {
                     @Override
@@ -141,7 +141,7 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
 
         RecyclerView recyclerView = view.findViewById(R.id.rvPersonalUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext())); // view.getContext() wegen Fragment
-        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte, this);
+        adapter = new RecyclerViewAdapterPersonal(getActivity(), einsatzkraefte, this, dbHandler);
         adapter.setClickListener(this); // evtl. ueberfluessig wenn Listener in Kosntruktor uebergeben
         try {
             recyclerView.setAdapter(adapter);
