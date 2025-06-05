@@ -132,17 +132,7 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
     @Override
     public void onItemClick(View view, int position) {
 
-        /*if (abschnitte == null || position < 0 || position >= abschnitte.size()) {
-            // Handle invalid position or data not ready
-            return;
-        }
-
-        Abschnitt selectedAbschnitt = abschnitte.get(position);
-        Intent intent = new Intent(getActivity(), PersonalActivity.class);
-        intent.putExtra("abschnittID", selectedAbschnitt.getId());
-        startActivity(intent);*/
-
-        // Basic validation
+        // Grundlegende Validation
         if (adapter == null || this.abschnitte == null || position < 0 || position >= this.abschnitte.size()) {
             Log.e("AbschnitteFragment", "onItemClick: Invalid state or position. Position: " + position);
             return;
@@ -150,7 +140,16 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
 
         Abschnitt zuLoeschenderAbschnitt = this.abschnitte.get(position); // Get from fragment's list
 
-        // 1. Delete from DB
+        Intent intent = new Intent(getActivity(), AbschnittDetailActivity.class);
+        intent.putExtra("abschnittID", zuLoeschenderAbschnitt.getId());
+        startActivity(intent);
+
+
+
+
+
+        //Löschung aus Datenbank
+        /*// Löschung from DB
         boolean deletedFromDB = dbHandler.deleteAbschnitt(zuLoeschenderAbschnitt.getId());
 
         if (deletedFromDB) {
@@ -165,7 +164,7 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
             }
         } else {
             Toast.makeText(getActivity(), "Fehler beim Löschen von '" + zuLoeschenderAbschnitt.getName() + "'.", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
