@@ -145,9 +145,6 @@ public class AbschnitteFragment extends Fragment implements RecyclerViewAdapterA
         startActivity(intent);
 
 
-
-
-
         //Löschung aus Datenbank
         /*// Löschung from DB
         boolean deletedFromDB = dbHandler.deleteAbschnitt(zuLoeschenderAbschnitt.getId());
