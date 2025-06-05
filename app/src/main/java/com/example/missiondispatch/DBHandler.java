@@ -184,6 +184,52 @@ public class DBHandler extends SQLiteOpenHelper
         return einsatzkraefteList;
     }
 
+    //returns list containing all Einsatzkraefte aus einem Abschnitt
+    public List<Einsatzkraft> getAllEinsatzkraefte(int abschnittId)
+    {
+        List<Einsatzkraft> einsatzkraefteList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EINSATZKRAFT_ABSCHNITT + " == " + abschnittId;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        //Schleife iteriert durch alle Zeilen, waehrend die Daten in List geladen werden
+        if(cursor.moveToFirst())
+        {
+            do {
+                Einsatzkraft einsatzkraft = new Einsatzkraft();
+                einsatzkraft.setId(cursor.getInt(0));
+                einsatzkraft.setVorname(cursor.getString(1));
+                einsatzkraft.setNachname(cursor.getString(2));
+                einsatzkraft.setTelefon(cursor.getString(3));
+                einsatzkraft.setGeburtsdatum(cursor.getString(4));
+                einsatzkraft.setImEinsatz(cursor.getInt(5) == 1);
+                einsatzkraft.setTauchAusbildung(cursor.getInt(6));
+                einsatzkraft.setBootsAusbildung(cursor.getInt(7));
+                einsatzkraft.setStroemungsrettungsAusbildung(cursor.getInt(8));
+                einsatzkraft.setWrdAusbildung(cursor.getInt(9));
+                einsatzkraft.setSanAusbildung(cursor.getInt(10));
+                einsatzkraft.setFunkAusbildung(cursor.getInt(11));
+                einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+                try
+                {
+                    einsatzkraft.setAbschnittId(cursor.getInt(13));
+                }
+                catch (Exception e)
+                {
+                    Log.d("LoadEinsatzkraft", e.getMessage());
+                    einsatzkraft.setAbschnittId(-1);
+                }
+                einsatzkraefteList.add(einsatzkraft);
+            }
+            while(cursor.moveToNext());
+        }
+        cursor.close();
+        return einsatzkraefteList;
+    }
+
 
     /**********************************************************************************************
      |                                   UPDATE Einsatzkraft                                       |
