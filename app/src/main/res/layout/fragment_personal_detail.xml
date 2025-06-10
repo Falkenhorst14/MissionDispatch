@@ -256,23 +256,47 @@
 
                 </Spinner>
 
-                <Button
-                    android:id="@+id/btnAbschnittZuweisen"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/roundedbutton"
-                    android:textColor="@color/DLRG_Gelb"
-                    android:layout_gravity="left"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
 
-                    android:text="Abschnitt zuweisen"
-                    >
+                    <Button
+                        android:id="@+id/btnAbschnittZuweisen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/roundedbutton"
+                        android:textColor="@color/DLRG_Gelb"
+                        android:layout_gravity="left"
 
-                </Button>
+                        android:text="zuweisen"
+                        >
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btnAbschnittEntfernen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="left"
+                        android:background="@drawable/roundedbutton"
+                        android:textColor="@color/DLRG_Gelb"
+                        android:text="entfernen"/>
+
+
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 

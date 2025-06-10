@@ -58,6 +58,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private Spinner spnAbschnitt;
     private TextView tvAbschnitt;
     private Button btnAbschnittzuweisen;
+    private Button btnAbschnittentfernen;
     private int selectedAbschnittForZuweisung;
 
     public PersonalDetailFragment() {
@@ -111,7 +112,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         super.onViewCreated(view, savedInstanceState);
         spnAbschnitt = view.findViewById(R.id.spnAbschnitt);
         btnAbschnittzuweisen = view.findViewById(R.id.btnAbschnittZuweisen);
+        btnAbschnittentfernen = view.findViewById(R.id.btnAbschnittEntfernen);
         setupViewElements(view);
+
 
 
         //Es muss im Folgenden ein String-Array befüllt werden mit allen Abschnitten
@@ -152,6 +155,15 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                 setupViewElements();
             }
         });
+
+        btnAbschnittentfernen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                einsatzkraft.setAbschnittId(0);
+                dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                setupViewElements();
+            }
+        });
     }
 
     private void setupViewElements(@NonNull View view) {
@@ -172,7 +184,13 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
-        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        if (einsatzkraft.getAbschnittId() == 0) {
+            tvAbschnitt.setText("Kein Abschnitt");
+        }
+        else
+        {
+            tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        }
 
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
@@ -199,8 +217,12 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
-        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
-
+        if (einsatzkraft.getAbschnittId() == 0) {
+            tvAbschnitt.setText("Kein Abschnitt");
+        }
+        else {
+            tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        }
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
                 "04232 25293", "01.01.1970", 3, 1, 1,

@@ -386,6 +386,7 @@ public class DBHandler extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
 
+
         data.put("einsatzkraft_abschnitt", einsatzkraft.getAbschnittId());
 
         db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);

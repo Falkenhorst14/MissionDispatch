@@ -58,7 +58,14 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         {
             if (dbHandler.getAbschnitt(mData.get(position).getAbschnittId()) != null)
             {
-                holder.tvAbschnitt.setText(dbHandler.getAbschnitt(mData.get(position).getAbschnittId()).getName());
+                if (mData.get(position).getAbschnittId() != 0){
+                    holder.tvAbschnitt.setText(dbHandler.getAbschnitt(mData.get(position).getAbschnittId()).getName());
+                }
+                else
+                {
+                    holder.tvAbschnitt.setText("Kein Abschnitt");
+                }
+
             }
             else
             {
