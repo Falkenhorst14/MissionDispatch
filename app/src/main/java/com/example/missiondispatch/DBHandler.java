@@ -29,7 +29,7 @@ public class DBHandler extends SQLiteOpenHelper
 
     //T
     private static final String DB_Name = "MissionDispatchDB";
-    private static final int DB_Version = 5;
+    private static final int DB_Version = 7;
     private static final String Table_FIRST = "Einsatzkraefte";
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
@@ -46,6 +46,8 @@ public class DBHandler extends SQLiteOpenHelper
     private static final String col_FUNKAUSBILDUNG = "funkausbildung";
     private static final String col_FUEHRUNGSAUSBILDUNG = "fuehrungsausbildung";
     private static final String col_EINSATZKRAFT_ABSCHNITT = "einsatzkraft_abschnitt";
+    private static final String col_EINSATZKRAFT_ZEITSTART = "einsatzkraft_zeitstart";
+    private static final String col_EINSATZKRAFT_ZEITENDE = "einsatzkraft_zeitende";
 
 
     private static final String Table_SECOND = "Abschnitte";
@@ -75,7 +77,9 @@ public class DBHandler extends SQLiteOpenHelper
                 + col_SANASUBILDUNG + " INTEGER,"
                 + col_FUNKAUSBILDUNG + " INTEGER,"
                 + col_FUEHRUNGSAUSBILDUNG + " TEXT,"
-                + col_EINSATZKRAFT_ABSCHNITT + " INTEGER);";
+                + col_EINSATZKRAFT_ABSCHNITT + " INTEGER,"
+                + col_EINSATZKRAFT_ZEITSTART + " TEXT,"
+                + col_EINSATZKRAFT_ZEITENDE + " TEXT);";
 
         db.execSQL(query);
 
@@ -92,7 +96,7 @@ public class DBHandler extends SQLiteOpenHelper
         Log.w("DBHandler", "onUpgrade called. Upgrading database from version " + oldVersion + " to " + newVersion);
 
         // Auf Versionsnummer achten
-        if (oldVersion < 2 && newVersion >= 2) {
+        if (oldVersion < 7 && newVersion >= 7) {
             try {
                 Log.i("DBHandler", "Upgrading schema: Adding column " + col_EINSATZKRAFT_ABSCHNITT + " to " + Table_FIRST);
                 db.execSQL("ALTER TABLE " + Table_FIRST + " ADD COLUMN " + col_EINSATZKRAFT_ABSCHNITT + " INTEGER;");
@@ -132,6 +136,8 @@ public class DBHandler extends SQLiteOpenHelper
             einsatzkraft.setFunkAusbildung(cursor.getInt(11));
             einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
             einsatzkraft.setAbschnittId(cursor.getInt(13));
+            einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+            einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
 
             cursor.close();
         }
@@ -167,6 +173,9 @@ public class DBHandler extends SQLiteOpenHelper
                 einsatzkraft.setSanAusbildung(cursor.getInt(10));
                 einsatzkraft.setFunkAusbildung(cursor.getInt(11));
                 einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+                einsatzkraft.setAbschnittId(cursor.getInt(13));
+                einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+                einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
                 try
                 {
                     einsatzkraft.setAbschnittId(cursor.getInt(13));
@@ -176,6 +185,54 @@ public class DBHandler extends SQLiteOpenHelper
                     Log.d("LoadEinsatzkraft", e.getMessage());
                     einsatzkraft.setAbschnittId(-1);
                 }
+                einsatzkraefteList.add(einsatzkraft);
+            }
+            while(cursor.moveToNext());
+        }
+        cursor.close();
+        return einsatzkraefteList;
+    }
+
+    //returns list containing all Einsatzkraefte aus einem Abschnitt
+    public List<Einsatzkraft> getAllEinsatzkraefte(int abschnittId)
+    {
+        List<Einsatzkraft> einsatzkraefteList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EINSATZKRAFT_ABSCHNITT + " == " + abschnittId;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        //Schleife iteriert durch alle Zeilen, waehrend die Daten in List geladen werden
+        if(cursor.moveToFirst())
+        {
+            do {
+                Einsatzkraft einsatzkraft = new Einsatzkraft();
+                einsatzkraft.setId(cursor.getInt(0));
+                einsatzkraft.setVorname(cursor.getString(1));
+                einsatzkraft.setNachname(cursor.getString(2));
+                einsatzkraft.setTelefon(cursor.getString(3));
+                einsatzkraft.setGeburtsdatum(cursor.getString(4));
+                einsatzkraft.setImEinsatz(cursor.getInt(5) == 1);
+                einsatzkraft.setTauchAusbildung(cursor.getInt(6));
+                einsatzkraft.setBootsAusbildung(cursor.getInt(7));
+                einsatzkraft.setStroemungsrettungsAusbildung(cursor.getInt(8));
+                einsatzkraft.setWrdAusbildung(cursor.getInt(9));
+                einsatzkraft.setSanAusbildung(cursor.getInt(10));
+                einsatzkraft.setFunkAusbildung(cursor.getInt(11));
+                einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+                try
+                {
+                    einsatzkraft.setAbschnittId(cursor.getInt(13));
+                }
+                catch (Exception e)
+                {
+                    Log.d("LoadEinsatzkraft", e.getMessage());
+                    einsatzkraft.setAbschnittId(-1);
+                }
+                einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+                einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
                 einsatzkraefteList.add(einsatzkraft);
             }
             while(cursor.moveToNext());
@@ -195,6 +252,18 @@ public class DBHandler extends SQLiteOpenHelper
         ContentValues data = new ContentValues();
 
         data.put("imEinsatz", einsatzkraft.getImEinsatz());
+
+        db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
+        db.close();
+    }
+
+    public void updateEinsatzkraftEinsatzzeiten(Einsatzkraft einsatzkraft) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues data = new ContentValues();
+
+        data.put("einsatzkraft_zeitstart", einsatzkraft.getEinsatzzeitStart());
+        data.put("einsatzkraft_zeitende", einsatzkraft.getEinsatzzeitEnde());
 
         db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
         db.close();
@@ -327,7 +396,8 @@ public class DBHandler extends SQLiteOpenHelper
         //veraltet
         /*sqLiteDatabase.delete(Table_SECOND, "ID=" + Integer.toString(ID),null);
         sqLiteDatabase.close();*/
-        String query = "DELETE FROM " + Table_SECOND + " WHERE " + col_ID_AS + " = " + ID;
+
+        String query = "DELETE FROM " + Table_SECOND + " WHERE " + col_ID_AS + " == " + ID;
         sqLiteDatabase.execSQL(query);
         return true;
     }
@@ -338,6 +408,7 @@ public class DBHandler extends SQLiteOpenHelper
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues data = new ContentValues();
+
 
         data.put("einsatzkraft_abschnitt", einsatzkraft.getAbschnittId());
 

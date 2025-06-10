@@ -21,6 +21,9 @@ public class Einsatzkraft {
 
     //Zuordnungen
     private int abschnittId;
+    private String einsatzzeitStart;
+    private String einsatzzeitEnde;
+
 
     /**********************************************************************************************
      |                                      Konstruktoren                                          |
@@ -123,6 +126,10 @@ public class Einsatzkraft {
     }
     public int getAbschnittId() { return abschnittId; }
 
+    public String getEinsatzzeitStart() { return einsatzzeitStart; }
+    public String getEinsatzzeitEnde() { return einsatzzeitEnde; }
+
+
 
     /**********************************************************************************************
      |                                          Setter                                             |
@@ -178,6 +185,9 @@ public class Einsatzkraft {
         this.fuehrungsAusbildung = fuehrungsAusbildung;
     }
     public void setAbschnittId(int abschnittId) { this.abschnittId = abschnittId; }
+    public void setEinsatzzeitStart(String einsatzZeitStart) { this.einsatzzeitStart = einsatzZeitStart; }
+    public void setEinsatzzeitEnde(String einsatzzeitEnde) { this.einsatzzeitEnde = einsatzzeitEnde; }
+
 
 
     /**********************************************************************************************
