@@ -14,13 +14,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import androidx.appcompat.app.AlertDialog;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListResourceBundle;
 
@@ -58,7 +64,16 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private Spinner spnAbschnitt;
     private TextView tvAbschnitt;
     private Button btnAbschnittzuweisen;
+    private Button btnAbschnittentfernen;
     private int selectedAbschnittForZuweisung;
+
+    private TextView tvEinsatzzeitStart;
+    private Button btnEinsatzzeitStart;
+    private TextView tvEinsatzzeitEnde;
+    private Button btnEinsatzzeitEnde;
+    private ImageButton btnresetEinsatzzeitStart;
+    private ImageButton btnresetEinsatzzeitEnde;
+
 
     public PersonalDetailFragment() {
         // Required empty public constructor
@@ -111,7 +126,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         super.onViewCreated(view, savedInstanceState);
         spnAbschnitt = view.findViewById(R.id.spnAbschnitt);
         btnAbschnittzuweisen = view.findViewById(R.id.btnAbschnittZuweisen);
+        btnAbschnittentfernen = view.findViewById(R.id.btnAbschnittEntfernen);
         setupViewElements(view);
+
 
 
         //Es muss im Folgenden ein String-Array befüllt werden mit allen Abschnitten
@@ -147,11 +164,102 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnAbschnittzuweisen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
+
+                if (!checkbxImEinsatz.isChecked() && !einsatzkraft.getImEinsatz())
+                {
+                    einsatzkraft.setImEinsatz(true);
+                    checkbxImEinsatz.setChecked(true);
+                    einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
+                    dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                    showInformationDialog(einsatzkraft);
+                }
+                else {
+                    einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
+                    dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                }
+                setupViewElements();
+            }
+        });
+
+        btnAbschnittentfernen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                einsatzkraft.setAbschnittId(0);
                 dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
                 setupViewElements();
             }
         });
+
+
+        btnEinsatzzeitStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvEinsatzzeitStart.setVisibility(View.VISIBLE);
+                try {
+                    DateFormat startDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
+                    String dateStart = startDateFormat.format(new Date());
+                    tvEinsatzzeitStart.setText(dateStart);
+                    einsatzkraft.setEinsatzzeitStart(dateStart);
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG);
+                }
+
+
+            }
+        });
+        btnEinsatzzeitEnde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvEinsatzzeitEnde.setVisibility(View.VISIBLE);
+                try {
+                    DateFormat endDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
+                    String dateEnde = endDateFormat.format(new Date());
+                    tvEinsatzzeitEnde.setText(dateEnde);
+                    einsatzkraft.setEinsatzzeitEnde(dateEnde);
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
+        btnresetEinsatzzeitStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    einsatzkraft.setEinsatzzeitStart("");
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                    tvEinsatzzeitStart.setVisibility(View.INVISIBLE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler beim Zurücksetzen der Einsatzzeit.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        btnresetEinsatzzeitEnde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    einsatzkraft.setEinsatzzeitEnde("");
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                    tvEinsatzzeitEnde.setVisibility(View.INVISIBLE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler beim Zurücksetzen der Einsatzzeit.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     private void setupViewElements(@NonNull View view) {
@@ -172,7 +280,15 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
-        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        if (einsatzkraft.getAbschnittId() == 0) {
+            tvAbschnitt.setText("Kein Abschnitt");
+        }
+        else
+        {
+            tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        }
+        tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
+        tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
 
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
@@ -199,8 +315,15 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvWrdausbildung.setText(einsatzkraft.getWrdausbildungString(einsatzkraft.getWrdAusbildung()));
         tvSanausbildung.setText(einsatzkraft.getSanausbildungString(einsatzkraft.getSanAusbildung()));
         tvFunkausbildung.setText(einsatzkraft.getFunkausbildungString(einsatzkraft.getFunkAusbildung()));
-        tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        if (einsatzkraft.getAbschnittId() == 0) {
+            tvAbschnitt.setText("Kein Abschnitt");
+        }
+        else {
+            tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
+        }
 
+        tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
+        tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
                 "04232 25293", "01.01.1970", 3, 1, 1,
@@ -222,6 +345,12 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
         tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
+        tvEinsatzzeitStart = view.findViewById(R.id.tvEinsatzzeitStart);
+        btnEinsatzzeitStart = view.findViewById(R.id.btnEinsatzzeitStarten);
+        tvEinsatzzeitEnde = view.findViewById(R.id.tvEinsatzzeitEnde);
+        btnEinsatzzeitEnde = view.findViewById(R.id.btnEinsatzzeitStoppen);
+        btnresetEinsatzzeitStart = view.findViewById(R.id.btnresetStartZeit);
+        btnresetEinsatzzeitEnde = view.findViewById(R.id.btnresetEndeZeit);
 
         dbHandler = new DBHandler(getActivity().getApplicationContext());
     }
@@ -237,6 +366,21 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showInformationDialog(Einsatzkraft einsatzkraft) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        //Info-Titel
+        builder.setTitle("Information");
+
+        //Info-Nachricht
+        builder.setMessage(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname() + " wird in den Einsatz versetzt.");
+
+        builder.setCancelable(true);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

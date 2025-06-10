@@ -19,12 +19,21 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private OnItemCheckedChangeListener listener;
+    private DBHandler dbHandler;
 
-    // data is passed into the constructor
+    // passing data to constructor
     RecyclerViewAdapterPersonal(Context context, List<Einsatzkraft> data, OnItemCheckedChangeListener listener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.listener = listener;
+    }
+
+    //alternative with DBHandler instance
+    RecyclerViewAdapterPersonal(Context context, List<Einsatzkraft> data, OnItemCheckedChangeListener listener, DBHandler dbHandler) {
+        this.mInflater = LayoutInflater.from(context);
+        this.mData = data;
+        this.listener = listener;
+        this.dbHandler = dbHandler;
     }
 
     // inflates the row layout from xml when needed
@@ -45,7 +54,29 @@ public class RecyclerViewAdapterPersonal extends RecyclerView.Adapter<RecyclerVi
         holder.tvAusbildungBoot.setText(mData.get(position).getBootsausbildungString(mData.get(position).getBootsAusbildung()));
         holder.tvAusbildungStroemungsrettung.setText(mData.get(position).getStroemungsrettungsausbildungString(mData.get(position).getStroemungsrettungsAusbildung()));
         holder.bind(mData.get(position));
-        //holder.tvAbschnitt.setText(String.valueOf(mData.get(position).getAbschnittId()));
+        if(dbHandler != null)
+        {
+            if (dbHandler.getAbschnitt(mData.get(position).getAbschnittId()) != null)
+            {
+                if (mData.get(position).getAbschnittId() != 0){
+                    holder.tvAbschnitt.setText(dbHandler.getAbschnitt(mData.get(position).getAbschnittId()).getName());
+                }
+                else
+                {
+                    holder.tvAbschnitt.setText("Kein Abschnitt");
+                }
+
+            }
+            else
+            {
+                holder.tvAbschnitt.setText("Abschnitt N/A");
+            }
+
+        }
+        else {
+            holder.tvAbschnitt.setText("dbHandler N/A");
+        }
+
 
     }
 
