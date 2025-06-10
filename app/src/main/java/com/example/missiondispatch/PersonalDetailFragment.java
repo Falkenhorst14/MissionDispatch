@@ -150,8 +150,18 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnAbschnittzuweisen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
-                dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+
+                if (!checkbxImEinsatz.isChecked() && !einsatzkraft.getImEinsatz())
+                {
+                    einsatzkraft.setImEinsatz(true);
+                    checkbxImEinsatz.setChecked(true);
+                    einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
+                    dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                }
+                else {
+                    einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
+                    dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                }
                 setupViewElements();
             }
         });
