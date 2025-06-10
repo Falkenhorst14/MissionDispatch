@@ -186,6 +186,8 @@ public class Einsatzkraft {
     }
     public void setAbschnittId(int abschnittId) { this.abschnittId = abschnittId; }
     public void setEinsatzzeitStart(String einsatzZeitStart) { this.einsatzzeitStart = einsatzZeitStart; }
+    public void setEinsatzzeitEnde(String einsatzzeitEnde) { this.einsatzzeitEnde = einsatzzeitEnde; }
+
 
 
     /**********************************************************************************************
