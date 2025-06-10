@@ -136,6 +136,8 @@ public class DBHandler extends SQLiteOpenHelper
             einsatzkraft.setFunkAusbildung(cursor.getInt(11));
             einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
             einsatzkraft.setAbschnittId(cursor.getInt(13));
+            einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+            einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
 
             cursor.close();
         }
@@ -171,6 +173,9 @@ public class DBHandler extends SQLiteOpenHelper
                 einsatzkraft.setSanAusbildung(cursor.getInt(10));
                 einsatzkraft.setFunkAusbildung(cursor.getInt(11));
                 einsatzkraft.setFuehrungsAusbildung(cursor.getString(12));
+                einsatzkraft.setAbschnittId(cursor.getInt(13));
+                einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+                einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
                 try
                 {
                     einsatzkraft.setAbschnittId(cursor.getInt(13));
@@ -226,6 +231,8 @@ public class DBHandler extends SQLiteOpenHelper
                     Log.d("LoadEinsatzkraft", e.getMessage());
                     einsatzkraft.setAbschnittId(-1);
                 }
+                einsatzkraft.setEinsatzzeitStart(cursor.getString(14));
+                einsatzkraft.setEinsatzzeitEnde(cursor.getString(15));
                 einsatzkraefteList.add(einsatzkraft);
             }
             while(cursor.moveToNext());
@@ -245,6 +252,18 @@ public class DBHandler extends SQLiteOpenHelper
         ContentValues data = new ContentValues();
 
         data.put("imEinsatz", einsatzkraft.getImEinsatz());
+
+        db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
+        db.close();
+    }
+
+    public void updateEinsatzkraftEinsatzzeiten(Einsatzkraft einsatzkraft) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues data = new ContentValues();
+
+        data.put("einsatzkraft_zeitstart", einsatzkraft.getEinsatzzeitStart());
+        data.put("einsatzkraft_zeitende", einsatzkraft.getEinsatzzeitEnde());
 
         db.update(Table_FIRST, data, "ID=" + einsatzkraft.getId(), null);
         db.close();
