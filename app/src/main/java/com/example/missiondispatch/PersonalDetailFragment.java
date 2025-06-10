@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import androidx.appcompat.app.AlertDialog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListResourceBundle;
@@ -157,6 +158,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                     checkbxImEinsatz.setChecked(true);
                     einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
                     dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+                    showInformationDialog(einsatzkraft);
                 }
                 else {
                     einsatzkraft.setAbschnittId(selectedAbschnittForZuweisung);
@@ -269,6 +271,21 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showInformationDialog(Einsatzkraft einsatzkraft) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        //Info-Titel
+        builder.setTitle("Information");
+
+        //Info-Nachricht
+        builder.setMessage(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname() + " wird in den Einsatz versetzt.");
+
+        builder.setCancelable(true);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
