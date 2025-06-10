@@ -21,7 +21,11 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import androidx.appcompat.app.AlertDialog;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ListResourceBundle;
 
@@ -63,7 +67,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private int selectedAbschnittForZuweisung;
 
     private TextView tvEinsatzzeitStart;
+    private Button btnEinsatzzeitStart;
     private TextView tvEinsatzzeitEnde;
+    private Button btnEinsatzzeitEnde;
 
 
     public PersonalDetailFragment() {
@@ -180,6 +186,45 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                 setupViewElements();
             }
         });
+
+
+        btnEinsatzzeitStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    DateFormat startDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
+                    String dateStart = startDateFormat.format(new Date());
+                    tvEinsatzzeitStart.setText(dateStart);
+                    einsatzkraft.setEinsatzzeitStart(dateStart);
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG);
+                }
+
+
+            }
+        });
+        btnEinsatzzeitEnde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    DateFormat endDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
+                    String dateEnde = endDateFormat.format(new Date());
+                    tvEinsatzzeitEnde.setText(dateEnde);
+                    einsatzkraft.setEinsatzzeitEnde(dateEnde);
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG);
+                }
+
+
+            }
+        });
+
     }
 
     private void setupViewElements(@NonNull View view) {
@@ -242,6 +287,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
             tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
         }
 
+        tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
+        tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
+
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
                 "04232 25293", "01.01.1970", 3, 1, 1,
                 1, 2, 2, "❚");*/
@@ -263,7 +311,9 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
         tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
         tvEinsatzzeitStart = view.findViewById(R.id.tvEinsatzzeitStart);
+        btnEinsatzzeitStart = view.findViewById(R.id.btnEinsatzzeitStarten);
         tvEinsatzzeitEnde = view.findViewById(R.id.tvEinsatzzeitEnde);
+        btnEinsatzzeitEnde = view.findViewById(R.id.btnEinsatzzeitStoppen);
 
         dbHandler = new DBHandler(getActivity().getApplicationContext());
     }
