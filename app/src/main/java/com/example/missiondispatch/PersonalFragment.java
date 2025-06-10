@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.content.DialogInterface;
+import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,14 +169,25 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
     }
 
     @Override
-    public void onItemCheckedChanged(int position, boolean isChecked) {
-        Einsatzkraft einsatzkraft = einsatzkraefte.get(position);
-        einsatzkraft.setImEinsatz(isChecked);
+    public void onItemCheckedChanged(final int position, final boolean isCheckedNow) {
+        if (einsatzkraefte == null || position < 0 || position >= einsatzkraefte.size() || !isAdded()) {
+            return;
+        }
 
-        // Hier Datenbank aktualisieren
-        new Thread(() -> {
-            dbHandler.updateEinsatzkraftStatus(einsatzkraft);
-        }).start();
+        final Einsatzkraft einsatzkraft = einsatzkraefte.get(position);
+        final boolean originalCheckedState = einsatzkraft.getImEinsatz();
+
+        if (!isCheckedNow)
+        {
+            showConfirmationDialog(einsatzkraft, position, originalCheckedState);
+        }
+        else {
+            einsatzkraft.setImEinsatz(true);
+            // DB wird aktualisiert
+            new Thread(() -> {
+                dbHandler.updateEinsatzkraftStatus(einsatzkraft);
+            }).start();
+        }
     }
 
     @Override
@@ -188,4 +201,50 @@ public class PersonalFragment extends Fragment implements RecyclerViewAdapterPer
         else { Log.d("ViewError", "Fehler beim getten der View."); }
 
     }
+
+    private void showConfirmationDialog(final Einsatzkraft einsatzkraft, final int itemPosition, final boolean originalCheckedState) {
+        //Ensuring Fragment attachment
+        if (!isAdded() || getContext() == null) return;
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
+        //Dialogtitel
+        builder.setTitle("Bestätigung: Einsatzstatus ändern");
+
+        //Dialognachricht
+        builder.setMessage(einsatzkraft.getVorname() + " " + einsatzkraft.getNachname() +
+                " wird als \"Nicht im Einsatz\" markiert. Dadurch wird auch die Abschnittszuordnung entfernt. Fortfahren?");
+
+        builder.setCancelable(false);
+
+
+        //"Positive" Schaltflaeche
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            einsatzkraft.setImEinsatz(false);
+            einsatzkraft.setAbschnittId(0);
+
+            // DB wird aktualisiert
+            new Thread(() -> {
+                dbHandler.updateEinsatzkraftStatus(einsatzkraft);
+            }).start();
+            new Thread(() -> {
+                dbHandler.updateEinsatzkraftAbschnitt(einsatzkraft);
+            }).start();
+
+                dialog.dismiss(); // Dialog schließen
+        });
+
+        // "Negative" Schaltfläche
+        builder.setNegativeButton("Abbrechen", (dialog, which) -> {
+                if(adapter != null)
+                {
+                    einsatzkraft.setImEinsatz(originalCheckedState);
+                    adapter.notifyItemChanged(itemPosition);
+                }
+                dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }
