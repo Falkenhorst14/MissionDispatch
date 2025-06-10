@@ -62,6 +62,10 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private Button btnAbschnittentfernen;
     private int selectedAbschnittForZuweisung;
 
+    private TextView tvEinsatzzeitStart;
+    private TextView tvEinsatzzeitEnde;
+
+
     public PersonalDetailFragment() {
         // Required empty public constructor
     }
@@ -203,6 +207,8 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         {
             tvAbschnitt.setText((dbHandler.getAbschnitt(einsatzkraft.getAbschnittId())).getName());
         }
+        tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
+        tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
 
 
         /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
@@ -256,6 +262,8 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         tvSanausbildung = view.findViewById(R.id.tvausbildungMedizin);
         tvFunkausbildung = view.findViewById(R.id.tvausbildungFunk);
         tvAbschnitt = view.findViewById(R.id.tvAktuellerAbschnitt);
+        tvEinsatzzeitStart = view.findViewById(R.id.tvEinsatzzeitStart);
+        tvEinsatzzeitEnde = view.findViewById(R.id.tvEinsatzzeitEnde);
 
         dbHandler = new DBHandler(getActivity().getApplicationContext());
     }
