@@ -29,7 +29,7 @@ public class DBHandler extends SQLiteOpenHelper
 
     //T
     private static final String DB_Name = "MissionDispatchDB";
-    private static final int DB_Version = 5;
+    private static final int DB_Version = 7;
     private static final String Table_FIRST = "Einsatzkraefte";
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
@@ -46,6 +46,8 @@ public class DBHandler extends SQLiteOpenHelper
     private static final String col_FUNKAUSBILDUNG = "funkausbildung";
     private static final String col_FUEHRUNGSAUSBILDUNG = "fuehrungsausbildung";
     private static final String col_EINSATZKRAFT_ABSCHNITT = "einsatzkraft_abschnitt";
+    private static final String col_EINSATZKRAFT_ZEITSTART = "einsatzkraft_zeitstart";
+    private static final String col_EINSATZKRAFT_ZEITENDE = "einsatzkraft_zeitende";
 
 
     private static final String Table_SECOND = "Abschnitte";
@@ -75,7 +77,9 @@ public class DBHandler extends SQLiteOpenHelper
                 + col_SANASUBILDUNG + " INTEGER,"
                 + col_FUNKAUSBILDUNG + " INTEGER,"
                 + col_FUEHRUNGSAUSBILDUNG + " TEXT,"
-                + col_EINSATZKRAFT_ABSCHNITT + " INTEGER);";
+                + col_EINSATZKRAFT_ABSCHNITT + " INTEGER,"
+                + col_EINSATZKRAFT_ZEITSTART + " TEXT,"
+                + col_EINSATZKRAFT_ZEITENDE + " TEXT);";
 
         db.execSQL(query);
 
@@ -92,7 +96,7 @@ public class DBHandler extends SQLiteOpenHelper
         Log.w("DBHandler", "onUpgrade called. Upgrading database from version " + oldVersion + " to " + newVersion);
 
         // Auf Versionsnummer achten
-        if (oldVersion < 2 && newVersion >= 2) {
+        if (oldVersion < 7 && newVersion >= 7) {
             try {
                 Log.i("DBHandler", "Upgrading schema: Adding column " + col_EINSATZKRAFT_ABSCHNITT + " to " + Table_FIRST);
                 db.execSQL("ALTER TABLE " + Table_FIRST + " ADD COLUMN " + col_EINSATZKRAFT_ABSCHNITT + " INTEGER;");
