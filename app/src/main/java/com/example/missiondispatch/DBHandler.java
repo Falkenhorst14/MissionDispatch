@@ -373,7 +373,8 @@ public class DBHandler extends SQLiteOpenHelper
         //veraltet
         /*sqLiteDatabase.delete(Table_SECOND, "ID=" + Integer.toString(ID),null);
         sqLiteDatabase.close();*/
-        String query = "DELETE FROM " + Table_SECOND + " WHERE " + col_ID_AS + " = " + ID;
+
+        String query = "DELETE FROM " + Table_SECOND + " WHERE " + col_ID_AS + " == " + ID;
         sqLiteDatabase.execSQL(query);
         return true;
     }

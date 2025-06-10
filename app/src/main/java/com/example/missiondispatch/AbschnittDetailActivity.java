@@ -3,6 +3,8 @@ package com.example.missiondispatch;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,8 @@ public class AbschnittDetailActivity extends AppCompatActivity {
     private TextView tvAbschnittDetailName;
     private ListView lvAbschnittDetailList;
     private List<Einsatzkraft> listEinsatzkraefteInAbschnitt;
+    private Button btnAbschnittLoeschen;
+    private Abschnitt aktuellerAbschnitt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,14 @@ public class AbschnittDetailActivity extends AppCompatActivity {
 
         ConstraintLayout constraintLayout = findViewById(R.id.constraintAbschnittDetailList);
 
+        aktuellerAbschnitt = dbHandler.getAbschnitt(abschnittIDExtra);
+
         tvAbschnittDetailName = findViewById(R.id.tvAbschnittDetailName);
-        tvAbschnittDetailName.setText(dbHandler.getAbschnitt(abschnittIDExtra).getName());
+        tvAbschnittDetailName.setText(aktuellerAbschnitt.getName());
 
         lvAbschnittDetailList = findViewById(R.id.lvAbschnittDetailEinsatzkraefte);
         listEinsatzkraefteInAbschnitt = dbHandler.getAllEinsatzkraefte(abschnittIDExtra);
+        btnAbschnittLoeschen = findViewById(R.id.btnLoeschenAbschnitt);
 
         if (listEinsatzkraefteInAbschnitt.size() <= 0)
         {
@@ -65,6 +72,15 @@ public class AbschnittDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Es war Id " + ekId, Toast.LENGTH_SHORT).show();
             });
         }
+
+        btnAbschnittLoeschen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHandler.deleteAbschnitt(aktuellerAbschnitt.getId());
+                Intent intent = new Intent(getApplicationContext(), PersonalActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
