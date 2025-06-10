@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,8 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
     private Button btnEinsatzzeitStart;
     private TextView tvEinsatzzeitEnde;
     private Button btnEinsatzzeitEnde;
+    private ImageButton btnresetEinsatzzeitStart;
+    private ImageButton btnresetEinsatzzeitEnde;
 
 
     public PersonalDetailFragment() {
@@ -191,6 +194,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnEinsatzzeitStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvEinsatzzeitStart.setVisibility(View.VISIBLE);
                 try {
                     DateFormat startDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
                     String dateStart = startDateFormat.format(new Date());
@@ -209,6 +213,7 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnEinsatzzeitEnde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvEinsatzzeitEnde.setVisibility(View.VISIBLE);
                 try {
                     DateFormat endDateFormat = new SimpleDateFormat("dd.MM.yyyy\nhh:mm");
                     String dateEnde = endDateFormat.format(new Date());
@@ -218,10 +223,40 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(),"Fehler bei Startdatum", Toast.LENGTH_LONG).show();
                 }
 
 
+            }
+        });
+
+        btnresetEinsatzzeitStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    einsatzkraft.setEinsatzzeitStart("");
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                    tvEinsatzzeitStart.setVisibility(View.INVISIBLE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler beim Zurücksetzen der Einsatzzeit.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        btnresetEinsatzzeitEnde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    einsatzkraft.setEinsatzzeitEnde("");
+                    dbHandler.updateEinsatzkraftEinsatzzeiten(einsatzkraft);
+                    tvEinsatzzeitEnde.setVisibility(View.INVISIBLE);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"Fehler beim Zurücksetzen der Einsatzzeit.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -314,6 +349,8 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnEinsatzzeitStart = view.findViewById(R.id.btnEinsatzzeitStarten);
         tvEinsatzzeitEnde = view.findViewById(R.id.tvEinsatzzeitEnde);
         btnEinsatzzeitEnde = view.findViewById(R.id.btnEinsatzzeitStoppen);
+        btnresetEinsatzzeitStart = view.findViewById(R.id.btnresetStartZeit);
+        btnresetEinsatzzeitEnde = view.findViewById(R.id.btnresetEndeZeit);
 
         dbHandler = new DBHandler(getActivity().getApplicationContext());
     }
