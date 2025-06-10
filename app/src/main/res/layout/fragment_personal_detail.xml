@@ -256,12 +256,22 @@
                         android:textStyle="bold"
                         />
 
+                    <ImageButton
+                        android:id="@+id/btnresetStartZeit"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/roundedbutton_red"
+                        android:src="@drawable/undo_24dp_fdeb1e_fill0_wght400_grad0_opsz24"
+                        android:textColor="@color/DLRG_Gelb" />
+
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <Button
                         android:id="@+id/btnEinsatzzeitStoppen"
@@ -286,6 +296,15 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         />
+
+                    <ImageButton
+                        android:id="@+id/btnresetEndeZeit"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/roundedbutton_red"
+                        android:src="@drawable/undo_24dp_fdeb1e_fill0_wght400_grad0_opsz24"
+                        android:textColor="@color/DLRG_Gelb" />
 
                 </LinearLayout>
 
