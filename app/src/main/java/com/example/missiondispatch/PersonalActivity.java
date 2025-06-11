@@ -74,7 +74,8 @@ public class PersonalActivity extends AppCompatActivity {
                         }
                         else {
                             allowFragmentTransaction = false;
-                            Fragment currentActiveFragment = getSupportFragmentManager().findFragmentById(R.id.framelayout);
+                            Fragment currentActiveFragment = getSupportFragmentManager()
+                                    .findFragmentById(R.id.framelayout);
                             int previousTabPosition = 0; // Default
                             if (currentActiveFragment instanceof PersonalFragment) {
                                 previousTabPosition = 0;
@@ -87,7 +88,9 @@ public class PersonalActivity extends AppCompatActivity {
                                 isProgrammaticallyTabChange = true; // loop praevention
                                 previousTab.select();
                             }
-                            Toast.makeText(PersonalActivity.this, "Bitte zuerst eine Person auswählen.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PersonalActivity.this,
+                                    "Bitte zuerst eine Person auswählen.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                         break;
                 }
@@ -127,7 +130,7 @@ public class PersonalActivity extends AppCompatActivity {
 
         try {
             einsatzkraftId = intentPersonalDetail.getIntExtra("einsatzkraftID", -1);
-            //Toast.makeText(this, "Es wurde auf ID " + einsatzkraftId + " geklickt.", Toast.LENGTH_SHORT).show();
+
             if (einsatzkraftId != -1) {
                 this.lastViewedEinsatzkraftId = einsatzkraftId;
 
@@ -143,7 +146,7 @@ public class PersonalActivity extends AppCompatActivity {
 
                 TabLayout.Tab tab = tabLayout.getTabAt(2);
                 if (tab != null) {
-                    //flag change before firing the OnTabSelectedListener
+                    //flag wird gesetzt, bevor der OnTabSelectedListener getriggert wird
                     isProgrammaticallyTabChange = true;
                     tab.select();
                 }
@@ -199,27 +202,20 @@ public class PersonalActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         FragmentManager fm = getSupportFragmentManager();
-        Fragment currentFragment = fm.findFragmentById(R.id.framelayout); // Replace with your container ID
+        Fragment currentFragment = fm.findFragmentById(R.id.framelayout);
 
         if (currentFragment instanceof PersonalFragment)
         {
-            //System.exit(0);
             finishAffinity();
-            /*if (isTaskRoot()) {
-                //moveTaskToBack(true);
-                //finishAffinity();
-                System.exit(0);
-            } else {
-                finish();
-            }*/
 
-        } else if (currentFragment instanceof AbschnitteFragment || currentFragment instanceof PersonalDetailFragment) {
+        } else if (currentFragment instanceof AbschnitteFragment
+                || currentFragment instanceof PersonalDetailFragment) {
             openPersonalFragment();
         } else if (fm.getBackStackEntryCount() > 0) {
-            // If there are fragments in the back stack, pop the stack
+            // pop den stack, wenn etwas vorhanden
             fm.popBackStack();
         } else {
-            // Otherwise, default behavior (usually finishes the activity if no fragment back stack)
+            // Standardverhalten
             finishAffinity();
         }
     }
@@ -231,7 +227,6 @@ public class PersonalActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.framelayout, fragment);
-        //Optional line:
         fragmentTransaction.addToBackStack(null);
 
         fragmentTransaction.commit();
