@@ -129,8 +129,6 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         btnAbschnittentfernen = view.findViewById(R.id.btnAbschnittEntfernen);
         setupViewElements(view);
 
-
-
         //Es muss im Folgenden ein String-Array befüllt werden mit allen Abschnitten
 
         List<Abschnitt> abschnitte = dbHandler.getAllAbschnitte();
@@ -289,12 +287,6 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
         }
         tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
         tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
-
-
-        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
-                "04232 25293", "01.01.1970", 3, 1, 1,
-                1, 2, 2, "❚");*/
-        //●
     }
 
     //Ueberladen zur Aktualisierung
@@ -324,11 +316,6 @@ public class PersonalDetailFragment extends Fragment implements AdapterView.OnIt
 
         tvEinsatzzeitStart.setText(einsatzkraft.getEinsatzzeitStart());
         tvEinsatzzeitEnde.setText(einsatzkraft.getEinsatzzeitEnde());
-
-        /*einsatzkraft = new Einsatzkraft(0,"Thomas", "Meier",
-                "04232 25293", "01.01.1970", 3, 1, 1,
-                1, 2, 2, "❚");*/
-        //●
     }
 
     private void findViewElements(@NonNull View view)
