@@ -1,8 +1,7 @@
 # MissionDispatch – Android App zur Einsatzkraftverwaltung
 
 MissionDispatch ist eine Android-App zur Verwaltung und Anzeige von Einsatzkräften und Einsatzabschnitten – optimiert für Tablets mit einem übersichtlichen Mehrspaltenlayout.
-
----
+![MissionDispatch Logo](https://github.com/Falkenhorst14/MissionDispatch/blob/feature/app/src/main/res/drawable/MissionDispatchLogo.png)
 
 ## Funktionen
 
