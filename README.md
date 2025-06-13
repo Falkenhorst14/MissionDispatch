@@ -1,10 +1,10 @@
-# 🚨 MissionDispatch – Android App zur Einsatzkraftverwaltung
+# MissionDispatch – Android App zur Einsatzkraftverwaltung
 
 MissionDispatch ist eine Android-App zur Verwaltung und Anzeige von Einsatzkräften und Einsatzabschnitten – optimiert für Tablets mit einem übersichtlichen Mehrspaltenlayout.
 
 ---
 
-## 📱 Funktionen
+## Funktionen
 
 1. Dokumentation der beteiligten Einsatzkräfte
 2. Übersicht und Detail-Ansicht einer Einsatzkraft mit ihren Qualifikationen
@@ -13,7 +13,7 @@ MissionDispatch ist eine Android-App zur Verwaltung und Anzeige von Einsatzkräf
 
 ---
 
-## 🧩 Architekturübersicht
+## Architekturübersicht
 
 ### PersonalActivity
 - Enthält TabLayout
@@ -35,7 +35,7 @@ MissionDispatch ist eine Android-App zur Verwaltung und Anzeige von Einsatzkräf
 
 ---
 
-## 🗄️ Datenbankstruktur (SQLite)
+## Datenbankstruktur (SQLite)
 
 ### Tabelle: Einsatzkraefte
 | Spalte                        | Typ      |
@@ -58,7 +58,7 @@ Alle Zugriffe erfolgen über eine zentrale `DBHandler`-Klasse, die Methoden zum 
 
 ---
 
-## 🔧 Technologien
+## Technologien
 
 - Java (Android SDK)
 - SQLite (lokale Datenbank)
@@ -68,7 +68,7 @@ Alle Zugriffe erfolgen über eine zentrale `DBHandler`-Klasse, die Methoden zum 
 
 ---
 
-## ▶️ Installation & Nutzung
+## Installation & Nutzung
 
 1. Klone das Repository:
    ```bash
